@@ -1,0 +1,158 @@
+<div id="containerWrap">
+    <div class="headerWrap">
+        <div id="header">
+            <app-header-secure></app-header-secure>
+        </div>
+    </div>
+    <!-- main app container -->
+    <div class="container">
+        <h4>Manage Companies</h4>
+        <div id="content">
+        	<div id="pnlPasses" *ngIf="!isForm">
+        		<div class="pass header"  *ngIf="companies.length > 0">
+                    <div>
+            			<div class="logo"></div>
+            			<div class="name" [class.active]="order === 'name'" (click)="setOrder('name')" title="Sort By Name">
+                            Name 
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="isactive" [class.active]="order === 'isActive'" (click)="setOrder('isActive')" title="Sort By Is Active">
+                            Is Active
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="type" [class.active]="order === 'createdDate'" (click)="setOrder('createdDate')" title="Sort By Created On">
+                            Created On
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+            			<div class="sharepass"></div>
+            			<div class="buttons"></div>
+                    </div>
+                    <div>
+                        <a id="lnkNew" (click)="new()" class="btnCreate" title="Create Company">Create Company</a>
+                    </div>
+        		</div>
+        		<div class="pass" [ngClass]="{sel: selView == i }"  *ngFor="let company of companies | orderBy: order : reverse; let i = index" [attr.data-index]="i">
+            		<div class="logo"><img src={{company.logoUrl}} alt="" /></div>
+            		<div class="name" (click)="edit(company)" title="click here to edit/view company">{{company.name}}</div>
+                    <div class="isactive">{{(company.isActive==1)?true:false}}</div>
+                    <div class="type">{{(company.createdDate!=null)?(formatDate(company.createdDate)|date :'short'):""}}</div>
+                    <div class="sharepass">
+                        <a routerLink="/stores/{{company.id}}" title="Company Stores">
+                            Stores
+                        </a>&nbsp;&nbsp;&nbsp;
+                        <a routerLink="/campaigns/{{company.id}}" title="Company Campaigns">
+                            Campaigns
+                        </a>
+                    </div> 
+            		<div class="buttons">
+        	    		<a (click)="removeCompany(company.id)" title="remove company">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.3333 11.334V10.6673C19.3333 9.93094 18.7364 9.33398 18 9.33398H14C13.2636 9.33398 12.6667 9.93094 12.6667 10.6673V11.334H10.6667C10.2985 11.334 10 11.6325 10 12.0007C10 12.3688 10.2985 12.6673 10.6667 12.6673H11.3333V20.0007C11.3333 21.1053 12.2288 22.0007 13.3333 22.0007H18.6667C19.7713 22.0007 20.6667 21.1053 20.6667 20.0007V12.6673H21.3333C21.7015 12.6673 22 12.3688 22 12.0007C22 11.6325 21.7015 11.334 21.3333 11.334H19.3333ZM18 10.6673H14V11.334H18V10.6673ZM19.3333 12.6673H12.6667V20.0007C12.6667 20.3689 12.9651 20.6673 13.3333 20.6673H18.6667C19.0349 20.6673 19.3333 20.3689 19.3333 20.0007V12.6673ZM14 14.0007H15.3333V19.334H14V14.0007ZM18 14.0007H16.6667V19.334H18V14.0007Z" fill="#8F92A1"/>
+                            </svg>            
+                        </a>
+            		</div>
+        		</div>
+        	</div>
+            <div id="pnlNoContent"  *ngIf="!loading && !isForm && companies.length == 0">
+                <p>No Company Found</p>
+                <div>
+                    <a id="lnkNew" (click)="new()" class="btnCreate" title="Create Company">Create Company</a>
+                </div>
+            </div>
+            <div class="card" *ngIf="isForm">
+                <h4 class="card-header text-center">{{ (company != null)?"Update Company":"Create Company"}}</h4>
+                <div class="card-body">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()" style="margin-top: 40px;">
+                        <div class="form-group box">
+                            <span class="label">Company Name</span>
+                            <div class="pnlFull">
+                                <input type="hidden" formControlName="id"/>
+                                <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Enter Company Name" autocomplete="off" />
+                            </div>
+                        </div>                                      
+                        <div class="form-group box box4">
+                            <h3>Logo</h3>
+                            <p class="info"></p>
+                            <div class="pnlImage">
+                                <div class="image">
+                                    <svg *ngIf="this.logoUrl == '' && !isLogoProgress" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="48" height="48" rx="16" fill="#8F92A1" fill-opacity="0.05"/>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24 27.9861C23.4477 27.9861 23 27.5384 23 26.9861V19.8285L19.7575 23.0711L18.3433 21.6568L24.0001 16L29.657 21.6568L28.2428 23.0711L25 19.8283V26.9861C25 27.5384 24.5523 27.9861 24 27.9861ZM18 26H16V30C16 31.1046 16.8954 32 18 32H30C31.1046 32 32 31.1046 32 30V26H30V30H18V26Z" fill="#8F92A1"/>
+                                    </svg>
+                                    <div class="pnlLoader" *ngIf="isLogoProgress">
+                                        <span class="loading"></span>
+                                    </div>
+                                    <img *ngIf="this.logoUrl != null && this.logoUrl != '' && !isLogoProgress" src={{logoUrl}} width="48" height="48" />
+                                </div>
+                                <div class="text">
+                                    <div class="row1">
+                                        <div ng2FileDrop
+                                             [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                                             (fileOver)="fileOverBase($event)"
+                                             [uploader]="uploader"
+                                             class="well my-drop-zone">
+                                            Drag and drop or <input type="file"  ng2FileSelect [uploader]="uploader"> to upload.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Website Url</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="websiteUrl" class="form-control" placeholder="Enter Website Url" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Calendar Url</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="calendarUrl" class="form-control" placeholder="Enter Calendar Url" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Contact Form Url</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="contactFormUrl" class="form-control" placeholder="Enter Contact Form Url" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Facebook Url</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="facebookUrl" class="form-control" placeholder="Enter Facebook Url" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Header Text</span>
+                            <div class="pnlFull">
+                                <textarea formControlName="headerText" class="form-control" placeholder="Enter Header Text" autocomplete="off" ></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Footer Text</span>
+                            <div class="pnlFull">
+                                <textarea formControlName="footerText" class="form-control" placeholder="Enter Footer Text" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group box noborder">
+                            <span class="label">Is Active?&nbsp;
+                                <input type="checkbox" formControlName="isActive" />
+                            </span>
+                        </div>
+                        <div class="form-group box alignItem">
+                            <button [disabled]="loading" class="btn btn-primary btnCreate btnCreate2">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ (company != null)?"UPDATE":"CREATE"}}
+                            </button>
+                            <button  (click)="close()" class="btn btn-primary btnCreate btnCreate3">
+                                CANCEL
+                            </button>
+                        </div>
+                        <div *ngIf="success" class="alert alert-success mt-3 mb-0">{{success}}</div>
+                        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>

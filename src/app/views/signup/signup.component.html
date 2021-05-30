@@ -1,0 +1,67 @@
+<div id="containerWrap" class='login'>
+    <!-- main app container -->
+    <div class="container">
+        <app-header></app-header>
+        <div id="pnlLogin" class="mt-5 reset">
+            <div class="card">
+                <h4 class="card-header text-center">Sign up today</h4>
+                <div class="card-body">
+                    <p>Already have an account? <a routerLink="/login">Sign In</a></p>
+                    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                        <div style="display:flex;">
+                            <div class="form-group box">
+                                <input type="text" formControlName="firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" placeholder="First Name" autocomplete="off" />
+                                <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+                                    <div *ngIf="f.firstname.errors.required">Invalid</div>
+                                </div>
+                            </div>
+                            <div class="form-group box">
+                                <input type="text" formControlName="lastname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" placeholder="Last Name" autocomplete="off" />
+                                <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                                    <div *ngIf="f.lastname.errors.required">Invalid</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <input type="text" formControlName="company" class="form-control" placeholder="Company" autocomplete="off" />
+                        </div>
+                        <div class="form-group box">
+                            <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email" autocomplete="off" />
+                            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                <div *ngIf="f.email.errors.required">Invalid</div>
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" autocomplete="off" />
+                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                <div *ngIf="f.password.errors.required">Invalid</div>
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <input type="password" formControlName="confirmpassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmpassword.errors }" placeholder="Confirm Password" autocomplete="off" />
+                            <div *ngIf="submitted && f.confirmpassword.errors" class="invalid-feedback">
+                                <div *ngIf="f.confirmpassword.errors.required">Invalid</div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display:flex;">
+                            <div class="left" style="width:100%;">
+                                <input type="checkbox" formControlName="remember" class="form-control" />
+                                <span>By creating an account, you agree to our <a href="https://mobeomedia.com/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="https://mobeomedia.com/terms-of-use/" target="_blank">Term and Conditions</a></span>
+                            </div>  
+                        </div>
+                        <button [disabled]="loading" class="btn btn-primary btnLogin">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Create Account
+                        </button>
+                        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- credits -->
+    <div class="text-center mt-4">
+        <p>
+        </p>
+    </div>
+</div>

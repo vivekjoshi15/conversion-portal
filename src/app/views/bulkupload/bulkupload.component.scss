@@ -1,0 +1,248 @@
+.container{
+	flex-direction: column;
+    align-items: center;
+    h4{
+    	font-family: Roboto;
+		font-style: normal;
+		font-weight: bold;
+		font-size: 20px;
+		line-height: 24px;
+	    border: 0;
+	    width: 1110px;
+	    margin: 0px;
+	    margin-top: 40px;
+	    text-align: left;
+	    padding: 0px 30px;
+    }
+}
+
+#pnlPasses{	
+    width: 1110px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: 400px;
+    margin-bottom: 4rem !important;
+    background-color: #fff;
+    border-radius: 16px;
+    border: 1px solid #F5F5F5;
+    margin-top: 31px;    
+    form{
+    	padding: 40px;
+	    width: 100%;
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: flex-start;
+	    align-items: flex-start;
+	    p{
+		    padding: 0;
+		    margin: 0 0 10px;
+		    font-family: Roboto;
+		    font-style: normal;
+		    font-weight: bold;
+		    font-size: 14px;
+		    line-height: 20px;
+		    color: #000;
+		    text-align: left;
+		    a{
+		    	color: #8f92a1;
+		    	font-weight: 400;
+		    	font-style: italic;
+		    	text-decoration:none;
+		    	&:hover{
+		    		text-decoration:underline;		    	
+		    	}
+		    }
+	    }
+		.pnlImage{    
+			display: flex;
+    		margin-top: 4px;
+    		width: 100%;
+			align-items: center;
+			justify-content: flex-start;
+			.image{
+				width: 20px;
+				height: 20px;
+				border-radius: 16px;
+				align-items: center;
+				justify-content: center;
+				display: flex;
+				cursor: pointer;
+			}
+			.pnlLoader{
+				position:relative;
+    			display: flex;
+    			width: 48px;
+				.loading{
+					position: absolute;
+					width: 48px;
+					height: 48px;
+				}
+			}
+			div.text{
+				font-family: Roboto;
+				font-style: normal;
+				font-weight: normal;
+				font-size: 14px;
+				line-height: 20px;
+				letter-spacing: 0.25px;
+				color: #8F92A1;
+				margin: 0px !important;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				width: 100%;
+				.my-drop-zone{
+					display: flex;
+				    align-items: center;
+				    justify-content: center;
+					border: dotted 3px lightgray;
+					min-height: 20px;
+					padding: 40px;
+    				width: 100%;
+					background-color: #f5f5f5;
+					border: 1px solid #e3e3e3;
+					border-radius: 4px;
+					-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
+					box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
+				}
+				input{
+					color: #0052CC !important;
+					cursor: pointer;
+					width: 185px;
+				}
+			}
+		}
+		button.btnUpload {
+		    background: hsla(0,0%,9%,.8);
+		    border-radius: 25px;
+		    font-family: Roboto;
+		    font-style: normal;
+		    font-weight: 500;
+		    font-size: 14px;
+		    line-height: 20px;
+		    text-align: center;
+		    color: #fff;
+		    margin-top: 10px;
+		    width: 30%;
+		    border: 0;
+		    padding: 10px 0;
+		}
+	}	
+    .pass{
+	    display: flex;
+	    flex-direction: column;
+	    border-radius: 0px;
+	    padding: 3px 20px;
+	    margin: 5px 0px;
+	    width: calc(100% - 0px);
+	    align-items: center;
+	    justify-items: center;
+	    justify-content: flex-start;
+	    align-content: space-between;
+	    flex-wrap: wrap;
+	    flex-basis: auto;
+		border-radius: 16px;
+		&.sel{
+		   	background: rgba(143, 146, 161, 0.05);
+		}
+	    &:last-child{
+	    	margin-bottom: 50px;
+    		border-radius: 0 0 16px 16px;
+	    }
+    	&:hover{
+		    background: rgba(143, 146, 161, 0.05);
+    	}
+	    &.header{
+    		flex-direction: row;
+		    font-weight: 500;
+		    align-items: center;
+		    background: rgb(143 141 146 / 8%);
+		    color: #8F92A1;
+		    gap: 20px;
+		    height: 40px;
+    		align-content: center;
+		    margin: 0px 0px 0px;
+			div{
+    			width: 120px;
+    			color: #8F92A1;
+    			font-size: 10px;
+    			cursor: pointer;
+    			text-transform: uppercase;
+    			span {
+				   visibility: hidden;
+				}
+				&.active {
+				   color: #8F92A1;
+
+				   span {
+				     visibility: visible;
+				   }
+				}
+	    		&.name{
+    				width:130px;
+		    		font-weight: normal;
+	    		}
+			}
+	    }
+	    div{
+	    	display: flex;
+	    	flex-direction: row; 
+	    	font-size: 14px;
+    		color: rgba(23, 23, 23, 0.8);
+    		align-items: center;
+    		&.logo{
+    			width:40px;
+    		}
+    		&.name{
+    			width:130px;
+	    		font-weight: bold;
+    			cursor: pointer;
+    			text-align: left;
+    		}
+    		&.type{
+    			width: 120px;
+    			justify-content: flex-start;
+    		}
+    		img{
+    			height:32px;
+    			width:32px;
+    			border-radius:8px;
+    		}
+	    }
+	    .viewPanel{
+	    	display: flex;
+    		width: 100%;
+    		gap: 20px;
+	    }	   
+    }
+}
+
+#pnlData{
+	width: 100%;
+    display: flex;
+    border-radius: 0px;
+    align-items: center;
+    justify-items: center;
+    justify-content: flex-start;
+    align-content: space-between;
+    flex-wrap: wrap;
+    flex-basis: auto;
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.pnlPasses{
+	width: 100%;
+	display: flex;
+	margin-top:20px;
+	flex-direction: column;
+	h3{
+		font-weight: bold;
+		margin:0px;
+		padding:0px;
+		color: #000;
+	}
+}

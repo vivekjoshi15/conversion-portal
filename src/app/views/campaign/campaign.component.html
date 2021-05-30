@@ -1,0 +1,168 @@
+<div id="containerWrap">
+    <div class="headerWrap">
+        <div id="header">
+            <app-header-secure></app-header-secure>
+        </div>
+    </div>
+    <!-- main app container -->
+    <div class="container">
+        <h4>Manage Campaigns ({{companyName}})</h4>
+        <div id="content">
+        	<div id="pnlPasses" *ngIf="!isForm">
+        		<div class="pass header"  *ngIf="campaigns.length > 0">
+                    <div>
+            			<div class="name" [class.active]="order === 'name'" (click)="setOrder('name')" title="Sort By Name">
+                            Name 
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="type" [class.active]="order === 'startDate'" (click)="setOrder('startDate')" title="Sort By Start Date">
+                            Start Date 
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="type" [class.active]="order === 'endDate'" (click)="setOrder('endDate')" title="Sort By End Date">
+                            End Date 
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="color" [class.active]="order === 'name'" (click)="setOrder('name')" title="Sort By Text Color">
+                            Text Color 
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="color" [class.active]="order === 'name'" (click)="setOrder('name')" title="Sort By Header Color">
+                            Header Color 
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="isactive" [class.active]="order === 'isActive'" (click)="setOrder('isActive')" title="Sort By Is Active">
+                            Is Active
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="type" [class.active]="order === 'createdDate'" (click)="setOrder('createdDate')" title="Sort By Created On">
+                            Created On
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+            			<div class="sharepass" style="width: 85px;"></div>
+            			<div class="buttons"></div>
+                    </div>
+                    <div>
+                        <a (click)="new()" class="btnCreate" title="Create Campaign">Create Campaign</a>
+                    </div>
+        		</div>
+        		<div class="pass" [ngClass]="{sel: selView == i }"  *ngFor="let campaign of campaigns | orderBy: order : reverse; let i = index" [attr.data-index]="i">
+            		<div class="name" (click)="isForm=!isForm;isNew=false;isEdit=true" title="click here to edit/view company">{{campaign.name}}</div>
+                    <div class="type">{{formatDate(campaign.startDate)|date :'short'}}</div>
+                    <div class="type">{{formatDate(campaign.endDate)|date :'short'}}</div>
+                    <div class="color"><span class="boxColor" [style.background-color]="hexToRGB(campaign.textColor, false)"></span>{{campaign.textColor}}</div>
+                    <div class="color"><span class="boxColor" [style.background-color]="hexToRGB(campaign.headerColor, false)"></span>{{campaign.headerColor}}</div>
+                    <div class="isactive">{{(campaign.isActive==1)?true:false}}</div>
+                    <div class="type">{{formatDate(campaign.createdDate)|date :'short'}}</div>
+                    <div class="sharepass">
+                        <a routerLink="/campaignstores" title="View Stores">
+                            View Stores
+                        </a>&nbsp;&nbsp;&nbsp;
+                        <a routerLink="/bulkCampaignStores" title="Upload Campaign Stores">
+                            Upload Stores
+                        </a>
+                    </div> 
+            		<div class="buttons">
+        	    		<a (click)="removeCampaign(campaign.id)" title="remove campaign">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.3333 11.334V10.6673C19.3333 9.93094 18.7364 9.33398 18 9.33398H14C13.2636 9.33398 12.6667 9.93094 12.6667 10.6673V11.334H10.6667C10.2985 11.334 10 11.6325 10 12.0007C10 12.3688 10.2985 12.6673 10.6667 12.6673H11.3333V20.0007C11.3333 21.1053 12.2288 22.0007 13.3333 22.0007H18.6667C19.7713 22.0007 20.6667 21.1053 20.6667 20.0007V12.6673H21.3333C21.7015 12.6673 22 12.3688 22 12.0007C22 11.6325 21.7015 11.334 21.3333 11.334H19.3333ZM18 10.6673H14V11.334H18V10.6673ZM19.3333 12.6673H12.6667V20.0007C12.6667 20.3689 12.9651 20.6673 13.3333 20.6673H18.6667C19.0349 20.6673 19.3333 20.3689 19.3333 20.0007V12.6673ZM14 14.0007H15.3333V19.334H14V14.0007ZM18 14.0007H16.6667V19.334H18V14.0007Z" fill="#8F92A1"/>
+                            </svg>            
+                        </a>
+            		</div>
+        		</div>
+        	</div>
+            <div id="pnlNoContent" *ngIf="!loading && !isForm && campaigns.length == 0">
+                <p>No Campaign Found</p>
+                <div>
+                    <a (click)="new()" class="btnCreate" title="Create Campaign">Create Campaign</a>
+                </div>
+            </div>
+            <div class="card" *ngIf="isForm">
+                <h4 class="card-header text-center">{{ (campaign != null)?"Update Campaign":"Create Campaign"}}</h4>
+                <div class="card-body">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()" style="margin-top: 40px;">
+                        <div class="form-group box">
+                            <span class="label">Campaign Name</span>
+                            <div class="pnlFull">
+                                <input type="hidden" formControlName="id"/>
+                                <input type="hidden" formControlName="uniqueUrl"/>
+                                <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Enter Campaign Name" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="TwoCols">
+                            <div class="form-group box box2">  
+                                <span class="label">Start Date and Time</span>   
+                                <mat-form-field appearance="fill">
+                                  <mat-label>select date and time</mat-label>
+                                  <input matInput [matDatepicker]="startDate" formControlName="startDate">
+                                  <mat-datepicker-toggle matSuffix [for]="startDate">
+                                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                                  </mat-datepicker-toggle>
+                                  <mat-datepicker #startDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group box box2">  
+                                <span class="label">End Date and Time</span>   
+                                <mat-form-field appearance="fill">
+                                  <mat-label>select date and time</mat-label>
+                                  <input matInput [matDatepicker]="endDate" formControlName="endDate">
+                                  <mat-datepicker-toggle matSuffix [for]="endDate">
+                                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                                  </mat-datepicker-toggle>
+                                  <mat-datepicker #endDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-group box box2 box3">
+                            <div class="boxColor" [style.background-color]="form.controls.textColor.value?.rgba">
+                            </div>
+                            <div class="boxField">
+                                <span class="label">Label Color</span>
+                                <mat-form-field>
+                                    <input matInput [ngxMatColorPicker]="picker" formControlName="textColor">
+                                    <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+                                    <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+                                </mat-form-field>
+                            </div>          
+                        </div>  
+                        <div class="form-group box box2 box3">
+                            <div class="boxColor" [style.background-color]="form.controls.headerColor.value?.rgba">
+                            </div>
+                            <div class="boxField">
+                                <span class="label">Header Color</span>
+                                <mat-form-field>
+                                    <input matInput [ngxMatColorPicker]="picker2" formControlName="headerColor">
+                                    <ngx-mat-color-toggle matSuffix [for]="picker2"></ngx-mat-color-toggle>
+                                    <ngx-mat-color-picker #picker2 [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+                                </mat-form-field>
+                            </div>          
+                        </div>  
+                        <div class="form-group box">
+                            <span class="label">Header Text</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="headerText" class="form-control" placeholder="Enter Header Text" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box noborder">
+                            <span class="label">Is Active?&nbsp;
+                                <input type="checkbox" formControlName="isActive" />
+                            </span>
+                        </div>
+                        <div class="form-group box alignItem">
+                            <button [disabled]="loading" class="btn btn-primary btnCreate btnCreate2">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ (campaign != null)?"UPDATE":"CREATE"}}
+                            </button>
+                            <button  (click)="close()" class="btn btn-primary btnCreate btnCreate3">
+                                CANCEL
+                            </button>
+                        </div>
+                        <div *ngIf="success" class="alert alert-success mt-3 mb-0">{{success}}</div>
+                        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>

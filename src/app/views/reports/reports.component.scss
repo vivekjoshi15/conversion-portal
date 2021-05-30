@@ -1,0 +1,135 @@
+.container{
+	flex-direction: column;
+    align-items: center;
+    h4{
+    	font-family: Roboto;
+		font-style: normal;
+		font-weight: bold;
+		font-size: 20px;
+		line-height: 24px;
+	    border: 0;
+	    width: 1110px;
+	    margin: 0px;
+	    margin-top: 40px;
+	    text-align: left;
+	    padding: 0px 30px;
+    }
+}
+
+#pnlPasses{	
+    width: 1110px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: 530px;
+    margin-bottom: 4rem !important;
+    background-color: #fff;
+    border-radius: 16px;
+    border: 1px solid #F5F5F5;
+    margin-top: 31px;
+    padding-top: 10px;
+    .pass{
+	    display: flex;
+    	flex-direction: column;
+	    margin: 0px;
+	    border-radius: 0px;
+	    padding: 10px 50px;
+	    width: 100%;
+	    align-items: normal;
+	    justify-items: center;
+	    justify-content: flex-start;
+	    align-content: space-between;
+	    flex-basis: auto;
+	    gap: 10px;
+	    border-bottom: 1px solid #F5F5F5;
+	    .viewPanel{
+	    	display: flex;
+	    	.name{
+		    	display: flex;
+	    		width: 100%;
+		    	flex-direction: column; 
+		    	font-size: 14px;
+	    		text-align: left;
+	    		padding: 0px 10px;
+	    		color: rgba(23, 23, 23, 0.8);
+		    	.type{
+		    		width: 100%;
+				    justify-content: flex-start;
+				    align-items: flex-start;
+				    display: flex;
+				    font-weight: 500;
+				    font-size: 16px;
+				    margin-bottom: 3px;
+		    	}
+		    	.date{
+		    		display: flex;
+	    			color: rgba(23, 23, 23, 0.4);
+	    			b{
+	    				display: flex;
+	    				padding-right: 5px;
+	    			}
+		    	}
+	    	}
+	    	.buttons{
+	    	    display: flex;
+			    width: 100%;		
+			    padding: 0px 10px;	    
+    			justify-content: flex-end;
+    			align-items: center;
+			    a{
+					font-style: normal;
+				    font-weight: normal;
+				    font-size: 14px;
+				    line-height: 24px;
+				    background: #0052CC;
+				    border-radius: 10px;
+				    text-decoration: none;
+				    padding: 3px 20px;
+				    color: #FFFFFF;
+				    cursor: pointer;
+				    &.sel{
+				    	svg{
+				    		-webkit-transform: rotate(180deg);
+							-moz-transform: rotate(180deg);
+							-o-transform: rotate(180deg);
+							-ms-transform: rotate(180deg);
+							transform: rotate(180deg);
+				    	}
+				    }
+			    }
+	    	}	    
+	    }
+	    .detailPanel{
+	    	display: none;
+		    justify-content: space-between;
+		    border: 1px solid #d2d2ce;
+		    border-radius: 5px;
+		    font-weight: 600;
+		    color: #5b5c61;
+		    font-size: 15px;
+		    &.sel{
+		    	display: flex;
+		    }
+	    	div{
+	    	    display: flex;
+			    padding: 10px 0 10px;
+			    align-items: center;
+			    justify-content: center;
+			    justify-items: center;
+			    width: 100%;
+			    flex-direction: column;
+    			border-right: 1px solid #d2d2ce;
+    			&:last-child{
+    				border-right: 0px none #d2d2ce;
+    			}
+
+			    .added{
+			    	display: flex;
+			    	flex-direction: row;
+			    	background-color: transparent;
+			    }
+	    	}
+	    }
+    }
+}

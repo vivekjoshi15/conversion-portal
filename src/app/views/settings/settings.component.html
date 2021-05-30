@@ -1,0 +1,44 @@
+<div id="containerWrap">
+    <div class="headerWrap">
+        <div id="header">
+            <app-header-secure></app-header-secure>
+        </div>
+    </div>
+    <!-- main app container -->
+    <div class="container">    	
+	        <div id="pnlLogin" class="mt-5 reset">
+	            <div class="card">
+	                <h4 class="card-header text-center">Settings</h4>
+	                <div class="card-body">
+	                        <div class="form-group box"> 
+	    						<span class="label">API Key</span>
+	    						<div class="pnlFull">
+	    							<span>{{decodeString(currentUser.apikey)}}</span>
+		                        	<a class="planstatus"  (click)="regenerate()" target="_blank" title="Re-generate API Key">Re-generate</a>
+		                        </div>
+	                        </div>
+	                        <div class="form-group box"> 
+	    						<span class="label">Plan:</span>
+	    						<div class="pnlFull">
+	    							<span>{{currentUser.billingPlan}}</span>
+		                        	<a class="planstatus" href="https://www.mobeomedia.com/pricing/" target="_blank"  title="Upgrade Billing Plan">Upgrade Plan</a>
+		                        </div>
+	                        </div>
+	                        <div class="form-group box"> 
+	    						<span class="label">Pass Usage</span>
+	    						<div class="value">
+									<div class="plan_progressbar">
+										<div class="bar" style="width: 88%;"></div>
+										<div class="totals"><span>{{currentUser.planPasses}}</span>passes</div>
+										<div class="pointer" style="left: 88%;">{{currentUser.planUsage}}</div>
+									</div>
+								</div>
+	                        </div>
+	                        <div *ngIf="success" class="alert alert-success mt-3 mb-0">{{success}}</div>
+	                        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+	                </div>
+	            </div>
+	        </div>
+    </div>
+    <app-footer></app-footer>
+</div>

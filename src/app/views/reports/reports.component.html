@@ -1,0 +1,115 @@
+<div id="containerWrap">
+    <div class="headerWrap">
+        <div id="header">
+            <app-header-secure></app-header-secure>
+        </div>
+    </div>
+    <!-- main app container -->
+    <div class="container">
+        <h4>Report</h4>
+    	<div id="pnlPasses">
+    		<div class="pass" *ngFor="let template of templates; let i = index" [attr.data-index]="i">    			
+    			<div class="viewPanel">
+	    			<div class="name">
+	    				<div class="type">{{template.PassName}}</div>
+	    				<div class="date"><b>created </b> on {{template.CreatedDate}}</div>
+	    			</div>
+	    			<div class="buttons">
+		    			<a [ngClass]="{sel: selView == i }" (click)="(selView==i)?selView=-1:selView=i">view report <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.291 10.7074C16.9214 10.0776 16.4754 9 15.5842 9H8.41268C7.52199 9 7.07572 10.0767 7.70525 10.7068L11.2878 14.2926C11.6782 14.6833 12.3113 14.6836 12.702 14.2932L16.291 10.7074Z" fill="white" fill-opacity="0.8"/>
+                        </svg></a>
+	    			</div>
+    			</div>	
+    			<div class="detailPanel" [ngClass]="{sel: selView == i }">
+                    <div *ngIf="template != null">
+                        <span>Viewed</span>                        
+                        <div class="added">
+                            <div>
+                                Web
+                                <span>{{template.Views}}</span>
+                            </div>
+                            <div>
+                                iOS
+                                <span>{{template.Views}}</span>
+                            </div>
+                            <div>
+                                Google Pay
+                                <span>{{template.Views}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="template != null">
+                        <span>Added</span>
+                        <div class="added">
+                            <div>
+                                iOS
+                                <span>{{template.iPhoneAdded}}</span>
+                            </div>
+                            <div>
+                                Google Pay
+                                <span>{{template.androidAdded}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="template != null">
+                        <span>Deleted</span>
+                        <div class="added">
+                            <div>
+                                iOS
+                                <span>{{template.iPhoneDeleted}}</span>
+                            </div>
+                            <div>
+                                Google Pay
+                                <span>{{template.androidDeleted}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="template == null">
+                        <span>Viewed</span>                      
+                        <div class="added">
+                            <div>
+                                Web
+                                <span>0</span>
+                            </div>
+                            <div>
+                                iOS
+                                <span>0</span>
+                            </div>
+                            <div>
+                                Google Pay
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="template == null">
+                        <span>Added</span>
+                        <div class="added">
+                            <div>
+                                iOS
+                                <span>0</span>
+                            </div>
+                            <div>
+                                Google Pay
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="template == null">
+                        <span>Deleted</span>
+                        <div class="added">
+                            <div>
+                                iOS
+                                <span>0</span>
+                            </div>
+                            <div>
+                                Google Pay
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+    			</div>	
+    		</div>
+    	</div>
+    </div>
+    <app-footer></app-footer>
+</div>

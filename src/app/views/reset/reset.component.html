@@ -1,0 +1,38 @@
+<div id="containerWrap" class='login'>
+    <!-- main app container -->
+    <div class="container">
+        <app-header></app-header>
+        <div id="pnlLogin" class="mt-5 reset">
+            <div class="card">
+                <h4 class="card-header text-center">Reset Password</h4>
+                <div class="card-body">
+                    <p>Enter the email address you used when<br/> 
+                        you joined and we’ll send you instructions<br/> 
+                        to reset your password.</p>
+                    <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group box">
+                            <mat-icon aria-hidden="false" aria-label="email icon">email</mat-icon>
+                            <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email" autocomplete="off" />
+                            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                <div *ngIf="f.email.errors.required">Invalid</div>
+                            </div>
+                        </div>
+                        <button [disabled]="loading" class="btn btn-primary btnLogin">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Send
+                        </button>
+                        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                        <div>
+                            <a routerLink="/login" class="lnk">Sign In</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- credits -->
+    <div class="text-center mt-4">
+        <p>
+        </p>
+    </div>
+</div>
