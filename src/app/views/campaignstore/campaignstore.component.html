@@ -1,0 +1,133 @@
+<div id="containerWrap">
+    <div class="headerWrap">
+        <div id="header">
+            <app-header-secure></app-header-secure>
+        </div>
+    </div>
+    <!-- main app container -->
+    <div class="container">
+        <h4>Manage Campaign Stores (<span>Campaign: {{campaignName}}</span>)</h4>
+        <div id="content">
+            <div class="contentPanel">
+                <a (click)="goto()" class="btnBack" title="Back to Manage Campaigns">Back to Campaigns</a>
+            </div>
+        	<div id="pnlPasses" *ngIf="!isForm">
+        		<div class="pass header"  *ngIf="campaigns.length > 0">
+                    <div>
+            			<div class="name" [class.active]="order === 'storeId'" (click)="setOrder('storeId')" title="Sort By Store Id">
+                            Store Id
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="url" [class.active]="order === 'uniqueUrl'" (click)="setOrder('uniqueUrl')" title="Sort By Unique Url">
+                            Unique Url
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
+                        </div>
+                        <div class="type" [class.active]="order === 'module1'" (click)="setOrder('module1')" title="Sort By Purchase Link">
+                            Purchase Link
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
+                        </div>
+                        <div class="type" [class.active]="order === 'module2'" (click)="setOrder('module2')" title="Sort By View Sale">
+                            View Sale
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+                        </div>
+                        <div class="type" [class.active]="order === 'module3'" (click)="setOrder('module3')" title="Sort By Download a offer">
+                            Download a offer
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+                        </div>
+                        <div class="type" [class.active]="order === 'module4'" (click)="setOrder('module4')" title="Sort By Signup">
+                            Signup
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+                        </div>
+                        <div class="type" [class.active]="order === 'module5'" (click)="setOrder('module5')" title="Sort By Book Appointment">
+                            Book Appointment
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+                        </div>
+                        <div class="type" [class.active]="order === 'module6'" (click)="setOrder('module6')" title="Sort By Open an account">
+                            Open an account
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+                        </div>
+                        <div class="type" [class.active]="order === 'module7'" (click)="setOrder('module7')" title="Sort By Signup for an event">
+                            Signup for an event
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+                        </div>
+                        <div class="type" [class.active]="order === 'module8'" (click)="setOrder('module8')" title="Sort By Content Block">
+                            Content Block
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+                        </div>
+            			<div class="buttons"></div>
+                    </div>
+                    <div>
+                        <a (click)="new()" class="btnCreate" title="Add Campaign Store">Add Store</a>
+                    </div>
+        		</div>
+        		<div class="pass" [ngClass]="{sel: selView == i }"  *ngFor="let campaign of campaigns | orderBy: order : reverse; let i = index" [attr.data-index]="i">
+                    <div class="name" (click)="edit(campaign)" title="click here to edit/view campaign store">{{campaign.storeId}}</div> 
+                    <div class="url">{{campaign.uniqueUrl}}</div>    
+                    <div class="type">{{(campaign.module1 != null && campaign.module1 != '')?'Y':'N'}}</div>        
+                    <div class="type">{{(campaign.module2 != null && campaign.module2 != '')?'Y':'N'}}</div>
+                    <div class="type">{{(campaign.module3 != null && campaign.module3 != '')?'Y':'N'}}</div>       
+                    <div class="type">{{(campaign.module4 != null && campaign.module4 != '')?'Y':'N'}}</div>
+                    <div class="type">{{(campaign.module5 != null && campaign.module5 != '')?'Y':'N'}}</div>       
+                    <div class="type">{{(campaign.module6 != null && campaign.module6 != '')?'Y':'N'}}</div>        
+                    <div class="type">{{(campaign.module7 != null && campaign.module7 != '')?'Y':'N'}}</div>        
+                    <div class="type">{{(campaign.module8 != null && campaign.module8 != '')?'Y':'N'}}</div> 
+            		<div class="buttons">
+                        <a title="View Report">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-gwj-c83="" fill-rule="evenodd" clip-rule="evenodd" d="M23.3334 15.9993C23.3334 20.0494 20.0501 23.3327 16.0001 23.3327C11.95 23.3327 8.66675 20.0494 8.66675 15.9993C8.66675 11.9493 11.95 8.66602 16.0001 8.66602C20.0501 8.66602 23.3334 11.9493 23.3334 15.9993ZM22.0001 15.9993C22.0001 19.3131 19.3138 21.9993 16.0001 21.9993C12.6864 21.9993 10.0001 19.3131 10.0001 15.9993C10.0001 12.6856 12.6864 9.99935 16.0001 9.99935C19.3138 9.99935 22.0001 12.6856 22.0001 15.9993ZM16.0001 11.3327C18.5774 11.3327 20.6667 13.422 20.6667 15.9993V16.666H19.3334V15.9993C19.3334 14.1584 17.841 12.666 16.0001 12.666C14.1591 12.666 12.6667 14.1584 12.6667 15.9993V16.666H11.3334V15.9993C11.3334 13.422 13.4228 11.3327 16.0001 11.3327ZM15.3334 13.9993V16.7798C14.5566 17.0543 14.0001 17.7952 14.0001 18.666C14.0001 19.7706 14.8955 20.666 16.0001 20.666C17.1047 20.666 18.0001 19.7706 18.0001 18.666C18.0001 17.7952 17.4435 17.0543 16.6667 16.7798V13.9993H15.3334ZM15.3334 18.666C15.3334 18.2978 15.6319 17.9993 16.0001 17.9993C16.3683 17.9993 16.6667 18.2978 16.6667 18.666C16.6667 19.0342 16.3683 19.3327 16.0001 19.3327C15.6319 19.3327 15.3334 19.0342 15.3334 18.666Z" fill="#8F92A1"></path></svg>
+                        </a>
+        	    		<a (click)="removeCampaign(campaign.id)" title="remove campaign store">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.3333 11.334V10.6673C19.3333 9.93094 18.7364 9.33398 18 9.33398H14C13.2636 9.33398 12.6667 9.93094 12.6667 10.6673V11.334H10.6667C10.2985 11.334 10 11.6325 10 12.0007C10 12.3688 10.2985 12.6673 10.6667 12.6673H11.3333V20.0007C11.3333 21.1053 12.2288 22.0007 13.3333 22.0007H18.6667C19.7713 22.0007 20.6667 21.1053 20.6667 20.0007V12.6673H21.3333C21.7015 12.6673 22 12.3688 22 12.0007C22 11.6325 21.7015 11.334 21.3333 11.334H19.3333ZM18 10.6673H14V11.334H18V10.6673ZM19.3333 12.6673H12.6667V20.0007C12.6667 20.3689 12.9651 20.6673 13.3333 20.6673H18.6667C19.0349 20.6673 19.3333 20.3689 19.3333 20.0007V12.6673ZM14 14.0007H15.3333V19.334H14V14.0007ZM18 14.0007H16.6667V19.334H18V14.0007Z" fill="#8F92A1"/>
+                            </svg>            
+                        </a>
+            		</div>
+        		</div>
+        	</div>
+            <div id="pnlNoContent" *ngIf="!loading && !isForm && campaigns.length == 0">
+                <p>No Campaign Store Found</p>
+                <div class="buttons">
+                    <a (click)="new()" class="btnCreate" title="Add Campaign Store">Add Store</a>
+                    <a routerLink="/bulkcampaignupload/{{companyId}}/{{id}}" class="btnCreate" title="Upload Campaign Stores">Upload Stores</a>
+                </div>
+            </div>
+            <div class="card" *ngIf="isForm">
+                <h4 class="card-header text-center">{{ (campaign != null)?"Update Campaign Store":"Create Campaign Store"}}</h4>
+                <div class="card-body">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()" style="margin-top: 40px;">
+                        <div class="form-group box">
+                            <span class="label">Campaign Name</span>
+                            <div class="pnlFull">
+                                <input type="hidden" formControlName="id"/>
+                                <input type="hidden" formControlName="uniqueUrl"/>
+                                <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Enter Campaign Name" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Header Text</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="headerText" class="form-control" placeholder="Enter Header Text" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box noborder">
+                            <span class="label">Is Active?&nbsp;
+                                <input type="checkbox" formControlName="isActive" />
+                            </span>
+                        </div>
+                        <div class="form-group box alignItem">
+                            <button [disabled]="loading" class="btn btn-primary btnCreate btnCreate2">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                {{ (campaign != null)?"UPDATE":"CREATE"}}
+                            </button>
+                            <button  (click)="close()" class="btn btn-primary btnCreate btnCreate3">
+                                CANCEL
+                            </button>
+                        </div>
+                        <div *ngIf="success" class="alert alert-success mt-3 mb-0">{{success}}</div>
+                        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>

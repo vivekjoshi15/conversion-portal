@@ -1,0 +1,153 @@
+<div id="containerWrap">
+    <div class="headerWrap">
+        <div id="header">
+            <app-header-secure></app-header-secure>
+        </div>
+    </div>
+    <!-- main app container -->
+    <div class="container">    	
+	    <h4>Bulk Store Upload (<span>Company: {{companyName}}</span>)</h4>
+    	<div id="pnlPasses">
+	        <form [formGroup]="bulkUploadForm">
+	        	<div class="form-group">
+	        		<p>Upload CVS file for store bulk upload (<a (click)="download()">click here</a> &nbsp;for .xlsx file format and save as .csv file for upload)</p>	
+	        		<a class="btnBack" title="Back to Manage Stores" (click)="goto()">	
+			           Back to Stores
+			        </a>
+	        	</div>
+	        	<div class="pnlImage">
+    				<div class="text">
+	    				<div ng2FileDrop
+						        [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+						        (fileOver)="fileOverBase($event)"
+						        [uploader]="uploader"
+						        class="well my-drop-zone">
+						        Drag and drop or&nbsp;<input type="file" #csvReader ng2FileSelect [uploader]="uploader" accept=".csv"/> to upload.
+
+			    				<div class="image">
+									<div class="pnlLoader" *ngIf="isFileProgress">
+										<span class="loading"></span>
+									</div>
+			    				</div>
+						</div>
+    				</div>
+    			</div>   
+    			<div class="pnlImage" style="justify-content: center;"> 			
+	                <div *ngIf="success" class="alert alert-success mt-3 mb-0">{{success}}</div>
+	                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>                
+    			</div>   
+                <div class="pnlPasses" *ngIf="stores.length > 0">  
+                	<h3>Store Data Preview </h3>              	
+		    		<div class="pass header">
+		                <div class="logo">
+		                </div>
+		    			<div class="type" [class.active]="order === 'StoreId'" (click)="setOrder('StoreId')" title="Sort By Store Id">
+		                    Store Id
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+		                </div>
+		    			<div class="name" [class.active]="order === 'Name'" (click)="setOrder('Name')" title="Sort By Name">
+		                    Name
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
+		                </div>
+		                <div class="type" [class.active]="order === 'Phone'" (click)="setOrder('Phone')" title="Sort By Phone">
+		                    Phone
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="type" [class.active]="order === 'Email'" (click)="setOrder('Email')" title="Sort By Email">
+		                    Email
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="name" [class.active]="order === 'Address1'" (click)="setOrder('Address1')" title="Sort By Address1">
+		                    Address1
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="type" [class.active]="order === 'City'" (click)="setOrder('City')" title="Sort By City">
+		                    City
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="type" [class.active]="order === 'State'" (click)="setOrder('State')" title="Sort By State">
+		                    State
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="type" [class.active]="order === 'Zipcode'" (click)="setOrder('Zipcode')" title="Sort By Zipcode">
+		                    Zipcode
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="button">
+		                	<button class="btn btn-primary btnUpload" title="Upload" (click)="onUpload()">
+			                    <span *ngIf="!loading && submitted" class="spinner-border spinner-border-sm mr-1"></span>
+			                    Upload
+			                </button>
+		                </div>
+		    		</div>
+		    		<div id="pnlData">
+			    		<div class="pass"  *ngFor="let store of stores | orderBy: order : reverse; let i = index" [attr.data-index]="i">
+        					<div class="logo"><img src={{store.LogoUrl}} alt="" /></div>
+			        		<div class="type">{{store.StoreId}}</div>
+			        		<div class="name">{{store.Name}}</div>	     
+			        		<div class="type">{{store.Phone}}</div>	    	     
+			        		<div class="type">{{store.Email}}</div>	    
+			        		<div class="name">{{store.Address1}}</div>
+			        		<div class="type">{{store.City}}</div>	    
+			        		<div class="type">{{store.State}}</div>	     
+			        		<div class="type">{{store.Zipcode}}</div> 
+			    		</div>
+		    		</div>
+                </div>
+                <div class="pnlPasses" *ngIf="invalidStores.length > 0">  
+                	<h3>Invalid Stores</h3>              	
+		    		<div class="pass header">
+		                <div class="logo">
+		                </div>
+		    			<div class="type" [class.active]="order === 'StoreId'" (click)="setOrder('storeId')" title="Sort By Store Id">
+		                    Store Id
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+		                </div>
+		    			<div class="name" [class.active]="order === 'name'" (click)="setOrder('name')" title="Sort By Name">
+		                    Name
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
+		                </div>
+		                <div class="type" [class.active]="order === 'phone'" (click)="setOrder('phone')" title="Sort By Phone">
+		                    Phone
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="type" [class.active]="order === 'email'" (click)="setOrder('email')" title="Sort By Email">
+		                    Email
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="name" [class.active]="order === 'address1'" (click)="setOrder('address1')" title="Sort By Address1">
+		                    Address1
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="type" [class.active]="order === 'city'" (click)="setOrder('city')" title="Sort By City">
+		                    City
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="type" [class.active]="order === 'state'" (click)="setOrder('state')" title="Sort By State">
+		                    State
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		                <div class="type" [class.active]="order === 'zipcode'" (click)="setOrder('zipcode')" title="Sort By Zipcode">
+		                    Zipcode
+		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+		                </div>
+		    		</div>
+		    		<div id="pnlData">
+			    		<div class="pass"  *ngFor="let store of invalidStores | orderBy: order : reverse; let i = index" [attr.data-index]="i">
+        					<div class="logo"><img src={{store.logoUrl}} alt="" /></div>
+			        		<div class="type">{{store.storeId}}</div>
+			        		<div class="name">{{store.name}}</div>	     
+			        		<div class="type">{{store.phone}}</div>	    	     
+			        		<div class="type">{{store.email}}</div>	    
+			        		<div class="name">{{store.address1}}</div>
+			        		<div class="type">{{store.city}}</div>	    
+			        		<div class="type">{{store.state}}</div>	     
+			        		<div class="type">{{store.zipcode}}</div> 
+			    		</div>
+		    		</div>
+                </div>
+    		</form>
+    	</div>
+    </div>
+    <app-footer></app-footer>
+</div>

@@ -7,3 +7,4 @@ export * from './loader.service';
 export * from './alert.service';
 export * from './print.service';
 export * from './window.service';
+export * from './download.service';

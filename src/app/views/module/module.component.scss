@@ -158,24 +158,10 @@
 
 				    &.mailchimp {
 				        background: url('../../../assets/mailchimp.png') no-repeat left top;
-				    }
-
-				    &.linkqrcode {
-				        background: url('../../../assets/qrcode.png') no-repeat center center;
-					    height: 32px;
-					    width: 32px;
-					    background-size: 25px;
-				    }				    
+				    }			    
 
 				    &.mailchimp:hover {
 				        background: url('../../../assets/mailchimp_02.png') no-repeat left top;
-				    }
-
-				    &.linkqrcode:hover {
-				        background: url('../../../assets/qrcode_02.png') no-repeat center center;
-					    height: 32px;
-					    width: 32px;
-					    background-size: 25px;
 				    }
 				            
 				    i{

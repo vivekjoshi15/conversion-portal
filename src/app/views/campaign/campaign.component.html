@@ -6,7 +6,7 @@
     </div>
     <!-- main app container -->
     <div class="container">
-        <h4>Manage Campaigns ({{companyName}})</h4>
+        <h4>Manage Campaigns (<span>Company: {{companyName}}</span>)</h4>
         <div id="content">
         	<div id="pnlPasses" *ngIf="!isForm">
         		<div class="pass header"  *ngIf="campaigns.length > 0">
@@ -39,7 +39,7 @@
                             Created On
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
                         </div>
-            			<div class="sharepass" style="width: 85px;"></div>
+            			<div class="sharepass" style="width: 85px;">stores</div>
             			<div class="buttons"></div>
                     </div>
                     <div>
@@ -47,22 +47,22 @@
                     </div>
         		</div>
         		<div class="pass" [ngClass]="{sel: selView == i }"  *ngFor="let campaign of campaigns | orderBy: order : reverse; let i = index" [attr.data-index]="i">
-            		<div class="name" (click)="isForm=!isForm;isNew=false;isEdit=true" title="click here to edit/view company">{{campaign.name}}</div>
-                    <div class="type">{{formatDate(campaign.startDate)|date :'short'}}</div>
-                    <div class="type">{{formatDate(campaign.endDate)|date :'short'}}</div>
+            		<div class="name" (click)="edit(campaign)" title="click here to edit/view company">{{campaign.name}}</div>
+                    <div class="type">{{campaign.startDate|date :'short'}}</div>
+                    <div class="type">{{campaign.endDate|date :'short'}}</div>
                     <div class="color"><span class="boxColor" [style.background-color]="hexToRGB(campaign.textColor, false)"></span>{{campaign.textColor}}</div>
                     <div class="color"><span class="boxColor" [style.background-color]="hexToRGB(campaign.headerColor, false)"></span>{{campaign.headerColor}}</div>
                     <div class="isactive">{{(campaign.isActive==1)?true:false}}</div>
-                    <div class="type">{{formatDate(campaign.createdDate)|date :'short'}}</div>
+                    <div class="type">{{campaign.createdDate|date :'short'}}</div>
                     <div class="sharepass">
-                        <a routerLink="/campaignstores" title="View Stores">
-                            View Stores
-                        </a>&nbsp;&nbsp;&nbsp;
-                        <a routerLink="/bulkCampaignStores" title="Upload Campaign Stores">
-                            Upload Stores
+                        <a routerLink="/campaignstores/{{companyId}}/{{campaign.id}}" title="View Stores">
+                           {{(campaign.campaignStores != null)?campaign.campaignStores.length:0}}
                         </a>
                     </div> 
-            		<div class="buttons">
+            		<div class="buttons">                        
+                        <a routerLink="/bulkcampaignupload/{{companyId}}/{{campaign.id}}" title="Bulk Upload Campaign Stores" class="copy">
+                            <svg _ngcontent-oxl-c83="" width="12" height="12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="upload" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-upload fa-w-16"><path _ngcontent-oxl-c83="" fill="currentColor" d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"></path></svg>
+                        </a>
         	    		<a (click)="removeCampaign(campaign.id)" title="remove campaign">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M19.3333 11.334V10.6673C19.3333 9.93094 18.7364 9.33398 18 9.33398H14C13.2636 9.33398 12.6667 9.93094 12.6667 10.6673V11.334H10.6667C10.2985 11.334 10 11.6325 10 12.0007C10 12.3688 10.2985 12.6673 10.6667 12.6673H11.3333V20.0007C11.3333 21.1053 12.2288 22.0007 13.3333 22.0007H18.6667C19.7713 22.0007 20.6667 21.1053 20.6667 20.0007V12.6673H21.3333C21.7015 12.6673 22 12.3688 22 12.0007C22 11.6325 21.7015 11.334 21.3333 11.334H19.3333ZM18 10.6673H14V11.334H18V10.6673ZM19.3333 12.6673H12.6667V20.0007C12.6667 20.3689 12.9651 20.6673 13.3333 20.6673H18.6667C19.0349 20.6673 19.3333 20.3689 19.3333 20.0007V12.6673ZM14 14.0007H15.3333V19.334H14V14.0007ZM18 14.0007H16.6667V19.334H18V14.0007Z" fill="#8F92A1"/>

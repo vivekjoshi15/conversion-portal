@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
   apiUrl: 'https://test.mobeomedia.com/UserService.svc',
-  apiMainUrl: 'https://test.mobeomedia.com'
+  apiMainUrl: 'https://test.mobeomedia.com',
+  apiApiUrl: 'https://alpha.mobeomedia.com/api'
 };
 
 export const cloudinaryConfiguration = {

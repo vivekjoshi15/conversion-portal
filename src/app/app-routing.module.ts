@@ -12,7 +12,9 @@ import { ModuleComponent } from './views/module';
 import { CampaignComponent } from './views/campaign';
 import { ReportsComponent } from './views/reports';
 import { ForgotPasswordComponent } from './views/forgotpassword';
-import { BulkUploadComponent } from './views/bulkupload';
+import { BulkStoreUploadComponent } from './views/bulkstoreupload';
+import { BulkCampaignStoreUploadComponent } from './views/bulkcampaignstoreupload';
+import { CampaignStoreComponent } from './views/campaignstore';
 
 import { AuthGuard } from './_helpers';
 
@@ -25,7 +27,9 @@ const routes: Routes = [
   { path: 'modules', component: ModuleComponent, canActivate: [AuthGuard]},  
   { path: 'stores/:companyId', component: StoreComponent, canActivate: [AuthGuard]}, 
   { path: 'campaigns/:companyId', component: CampaignComponent, canActivate: [AuthGuard]},  
-  { path: 'bulkupload/:id', component: BulkUploadComponent, canActivate: [AuthGuard]},  
+  { path: 'bulkupload/:id', component: BulkStoreUploadComponent, canActivate: [AuthGuard]},  
+  { path: 'bulkcampaignupload/:companyId/:id', component: BulkCampaignStoreUploadComponent, canActivate: [AuthGuard]},  
+  { path: 'campaignstores/:companyId/:id', component: CampaignStoreComponent, canActivate: [AuthGuard]},  
   { path: 'login', component: LoginComponent }, 
   { path: 'reset', component: ResetComponent },
   { path: 'sign-up', component: SignupComponent },

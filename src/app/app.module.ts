@@ -30,7 +30,7 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
 import { fakeBackendProvider } from './_helpers';
 import { BasicAuthInterceptor, ErrorInterceptor } from './_helpers';
 import { TimeoutInterceptor, DEFAULT_TIMEOUT } from './_helpers/angular-interceptor';
-import { HttpService, AlertService, LoaderService, WindowService, PrintingService, SafeHtmlPipe, SortByPipe } from './_services';
+import { HttpService, AlertService, LoaderService, WindowService, PrintingService, SafeHtmlPipe, SortByPipe, DownloadService } from './_services';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,7 +49,10 @@ import { ReportsComponent } from './views/reports';
 import { StoreComponent } from './views/store';
 import { ModuleComponent } from './views/module';
 import { CampaignComponent } from './views/campaign';
-import { BulkUploadComponent } from './views/bulkupload';
+import { BulkStoreUploadComponent } from './views/bulkstoreupload';
+import { BulkCampaignStoreUploadComponent } from './views/bulkcampaignstoreupload';
+import { CampaignStoreComponent } from './views/campaignstore';
+
 
 @NgModule({
   imports: [
@@ -88,7 +91,9 @@ import { BulkUploadComponent } from './views/bulkupload';
     StoreComponent,
     ModuleComponent,
     CampaignComponent,
-    BulkUploadComponent,
+    BulkStoreUploadComponent,
+    BulkCampaignStoreUploadComponent,
+    CampaignStoreComponent
   ],
   providers: [
       DatePipe,
@@ -99,6 +104,7 @@ import { BulkUploadComponent } from './views/bulkupload';
       PrintingService, 
       SafeHtmlPipe,
       SortByPipe,
+      DownloadService,
       {provide: LocationStrategy, useClass: HashLocationStrategy},
       [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
       [{ provide: DEFAULT_TIMEOUT, useValue: 300000 }],

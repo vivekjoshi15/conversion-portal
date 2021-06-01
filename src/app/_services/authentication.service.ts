@@ -324,6 +324,25 @@ export class AuthenticationService {
             }));
     }
 
+    getCampaign(Id: number,apikey?: string){
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/Campaign/' + Id;    
+
+        return this.http.get<any>(`${url}`, httpOptions!)
+            .pipe(map((campaign: any) => {
+                return campaign;
+            }));
+    }
+
     getCompanyCampaigns(Id: number, apikey?: string){
         var apiKey: string=(apikey != undefined)?apikey as string:'';
 
@@ -355,6 +374,25 @@ export class AuthenticationService {
         };
 
         var url= environment.apiApiUrl +'/CampaignStore/getStoreCampaigns/' + Id + '/' + campaignId;   
+
+        return this.http.get<any>(`${url}`, httpOptions!)
+            .pipe(map((store: any) => {
+                return store;
+            }));
+    }
+
+    getCampaignStores(companyId: number, campaignId: number, apikey?: string){
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStore/getCampaignStores/' + companyId + '/' + campaignId;   
 
         return this.http.get<any>(`${url}`, httpOptions!)
             .pipe(map((store: any) => {
@@ -405,6 +443,26 @@ export class AuthenticationService {
         var url= environment.apiApiUrl +'/Campaign/' + campaign.Id;  
         
         return this.http.put<any>(`${url}`, JSON.stringify(campaign), httpOptions! )
+            .pipe(map((result: any) => {
+                return result;
+            }));
+    }   
+
+    bulkCampaignStoreUpload(companyId: number, id: number, stores: any, apikey?: string) {
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+        httpOptions.headers = httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+
+        var url= environment.apiApiUrl +'/Campaign/bulkCampaignStoreUpload/' + companyId + '/' + id;  
+        
+        return this.http.put<any>(`${url}`, JSON.stringify(stores), httpOptions! )
             .pipe(map((result: any) => {
                 return result;
             }));
@@ -510,6 +568,26 @@ export class AuthenticationService {
         var url= environment.apiApiUrl +'/Store/' + store.Id;  
         
         return this.http.put<any>(`${url}`, JSON.stringify(store), httpOptions! )
+            .pipe(map((result: any) => {
+                return result;
+            }));
+    }   
+
+    bulkStoreUpload(id: number, stores: any, apikey?: string) {
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+        httpOptions.headers = httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+
+        var url= environment.apiApiUrl +'/Store/bulkStoreUpload/' + id;  
+        
+        return this.http.put<any>(`${url}`, JSON.stringify(stores), httpOptions! )
             .pipe(map((result: any) => {
                 return result;
             }));

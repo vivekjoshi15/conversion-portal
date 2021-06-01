@@ -6,7 +6,7 @@
     </div>
     <!-- main app container -->
     <div class="container">
-        <h4>Manage Stores ({{companyName}})</h4>
+        <h4>Manage Stores (<span>Company: {{companyName}}</span>)</h4>
         <div id="content">
         	<div id="pnlPasses" *ngIf="!isForm">
         		<div class="pass header"  *ngIf="stores.length > 0">
@@ -50,7 +50,7 @@
                     <div class="type">{{store.phone}}</div>
                     <div class="email">{{store.email}}</div>
                     <div class="isactive">{{(store.isActive==1)?true:false}}</div>
-                    <div class="type">{{(store.createdDate!=null)?(formatDate(store.createdDate)|date :'short'):""}}</div>
+                    <div class="type">{{(store.createdDate!=null)?(store.createdDate|date :'short'):""}}</div>
             		<div class="buttons">
         	    		<a (click)="removeStore(store.id)" title="remove store">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +62,8 @@
         	</div>
             <div id="pnlNoContent" *ngIf="!loading && !isForm && stores.length == 0">
                 <p>No Store Found</p>
-                <div>
+                <div class="buttons">
+                    <a routerLink="/bulkupload/{{companyId}}" class="btnCreate" title="Bulk Upload">Bulk Upload</a>
                     <a (click)="new()" class="btnCreate" title="Create Store">Create Store</a>
                 </div>
             </div>

@@ -1,0 +1,3 @@
+StoreId,Name,Address1,City,State,Zipcode,Phone,Email,WebsiteUrl,CalendarUrl,ContactFormUrl,FacebookUrl,LogoUrl
+Store5,New Store 2,"123, Test",Mohali,Punjab,160071,9888698578,test@test.com,http://www.apple.com,,,http://www.facebook.com,https://res.cloudinary.com/passbee/image/upload/v1620669528/qrxbvgnfq0ivgipwedan.png
+Store6,New Store 3,"123, Test",Chandigarh,Chandigarh,160017,9888698578,test@test.com,,http://www.apple.com,,,https://res.cloudinary.com/passbee/image/upload/v1620669528/qrxbvgnfq0ivgipwedan.png

@@ -35,6 +35,30 @@
     justify-content: flex-start;
     flex-direction: column;
     min-height: 400px;
+    .contentPanel{
+    	display: flex;
+    	align-content: flex-end;
+    	justify-content: flex-end;
+    	align-items: center;
+    	width: 100%;
+	    a.btnBack{
+	    	display: flex;
+		    justify-content: center;
+		    text-decoration: none;
+		    border-radius: 25px;
+		    text-transform: uppercase;
+		    font-style: normal;
+		    font-weight: 500;
+		    font-size: 10px;
+		    line-height: 18px;
+		    color: #fff;
+		    width: 170px;
+		    border: 0;
+		    padding: 4px 0;
+		    background: #0052cc;
+		    cursor: pointer;
+	   	}
+	}
 }
 
 #pnlNoContent{
@@ -42,7 +66,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start;    
     p{
     	font-family: Roboto;
 		font-style: normal;
@@ -63,7 +87,7 @@
     	a{
 	    	display: flex;
     	}
-    }
+    }	
 }
 
 #pnlPasses{	
@@ -112,6 +136,7 @@
 				display: flex;
     			color: #8F92A1;
     			font-size: 10px;
+    			line-height: 12px;
     			cursor: pointer;
     			text-transform: uppercase;
     			gap: 10px;
@@ -126,6 +151,11 @@
 				   }
 				}
 	    		&.name{
+    				width:100px;
+		    		font-weight: normal;
+	    		}
+	    		&.url{
+	    			width:130px;
 		    		font-weight: normal;
 	    		}
 	    		&.isactive{
@@ -143,14 +173,33 @@
     			width:40px;
     		}
     		&.name{
-    			width:140px;
+    			width:100px;
+	    		font-weight: bold;
+    			cursor: pointer;
+    			text-align: left;
+    		}
+    		&.url{
+    			width:130px;
 	    		font-weight: bold;
     			cursor: pointer;
     			text-align: left;
     		}
     		&.type{
-    			width: 100px;
+    			width: 74px;
+    			justify-content: center;
+    		}
+    		&.color{
+    			width: 93px;
     			justify-content: flex-start;
+    			.boxColor{
+    				width: 16px;
+					height: 16px;
+					background: #FFFFFF;
+					border: 1px solid rgba(23, 23, 23, 0.1);
+					box-sizing: border-box;
+					border-radius: 5px;
+    				margin-right: 5px;
+    			}
     		}
     		&.email{
     			width: 140px;
@@ -167,7 +216,7 @@
 			&.sharepass{
 				gap: 2px;
 			    margin-top: 0px;
-			    width: 140px;
+			    width: 200px;
 			    justify-items: center;
 			    justify-content: center;
 				a{
@@ -191,7 +240,7 @@
 			}
     		&.buttons{
     			gap: 10px;
-			    width: 40px;
+			    width: auto;
 			    justify-content: flex-end;
 			    a{
 			    	cursor: pointer;
@@ -360,6 +409,51 @@
 					color: #8F92A1;
 					font-weight:700;
 				}
+		    }
+		    &.box2{
+		    	flex-direction: column;
+			    .label{
+	    			display: flex;
+			    	font-family: Roboto;
+					font-style: normal;
+					font-weight: normal;
+					font-size: 12px;
+					line-height: 16px;
+					padding-left: 5px;
+					color: rgba(23, 23, 23, 0.6);
+			    }
+		    }
+		    &.box3{
+		    	flex-direction: row;
+		    	border-bottom: none 0px;		    	
+		    	.boxColor{
+			    	width: 56px;
+					height: 56px;
+					left: 482px;
+					top: 304px;
+					background: #FFFFFF;
+					border: 1px solid rgba(23, 23, 23, 0.1);
+					box-sizing: border-box;
+					border-radius: 12px;
+		    	}
+		    	.boxField{
+		    		width: calc(100% - 80px);
+				    margin-left: 24px;
+		    	}
+		    	.mat-form-field{
+		    		width: 100%;
+				    /*border-bottom: solid 1px rgba(143, 146, 161, 0.1);*/
+		    	}
+			    .label{
+	    			display: flex;
+			    	font-family: Roboto;
+					font-style: normal;
+					font-weight: normal;
+					font-size: 12px;
+					line-height: 16px;
+					padding-left: 5px;
+					color: rgba(23, 23, 23, 0.6);
+			    }
 		    }		    
 		    &.box4{
     			flex-direction: column;
@@ -452,6 +546,26 @@
 					    	width: 185px;
 						}
 					}
+				}
+		    }
+		}
+		.TwoCols{
+			display: flex;
+		    flex-direction: row;
+		    gap: 16px;
+		    margin-top: 10px;
+		    .box{
+				flex-direction: column;
+				border-bottom: 0px none;
+				.label{
+			    	display: flex;
+					font-family: Roboto;
+					font-style: normal;
+					font-weight: normal;
+					font-size: 12px;
+					line-height: 16px;
+					padding-left: 0px;
+					color: rgba(23, 23, 23, 0.6);
 				}
 		    }
 		}

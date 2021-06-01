@@ -13,6 +13,12 @@
 	    margin-top: 40px;
 	    text-align: left;
 	    padding: 0px 30px;
+	    span{
+			font-size: 16px;
+		    line-height: 20px;
+		    font-weight: bold;
+		    text-transform: capitalize;    
+	    }
     }
 }
 
@@ -163,7 +169,7 @@
 			&.sharepass{
 				gap: 2px;
 			    margin-top: 0px;
-			    width: 200px;
+			    width: 100px;
 			    justify-items: center;
 			    justify-content: center;
 				a{
@@ -187,7 +193,7 @@
 			}
     		&.buttons{
     			gap: 10px;
-			    width: 40px;
+			    width: auto;
 			    justify-content: flex-end;
 			    a{
 			    	cursor: pointer;
