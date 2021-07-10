@@ -7,9 +7,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {LocationStrategy, HashLocationStrategy, DatePipe} from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, PathLocationStrategy, DatePipe } from '@angular/common';
 
 import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
 
@@ -18,6 +20,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { Cloudinary as CloudinaryCore } from 'cloudinary-core';
 import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { cloudinaryConfiguration } from '../environments/environment';
 
@@ -30,7 +33,9 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
 import { fakeBackendProvider } from './_helpers';
 import { BasicAuthInterceptor, ErrorInterceptor } from './_helpers';
 import { TimeoutInterceptor, DEFAULT_TIMEOUT } from './_helpers/angular-interceptor';
-import { HttpService, AlertService, LoaderService, WindowService, PrintingService, SafeHtmlPipe, SortByPipe, DownloadService } from './_services';
+import { HttpService, AlertService, LoaderService, WindowService, PrintingService, 
+  SafeHtmlPipe, SortByPipe, DownloadService, AppService } from './_services';
+import { ModalModule } from './_modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,27 +57,36 @@ import { CampaignComponent } from './views/campaign';
 import { BulkStoreUploadComponent } from './views/bulkstoreupload';
 import { BulkCampaignStoreUploadComponent } from './views/bulkcampaignstoreupload';
 import { CampaignStoreComponent } from './views/campaignstore';
+import { ViewComponent } from './views/view';
+import { ContentBlockComponent } from './views/contentblock';
 
+const materialModules = [
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatPaginatorModule,
+];
 
 @NgModule({
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ...materialModules,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    MatIconModule,
     NgxMatColorPickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSlideToggleModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
     FileUploadModule,
     OrderModule,
     NgxIntlTelInputModule,
+    NgxMaterialTimepickerModule,
+    ModalModule,
+    AngularEditorModule,
     CloudinaryModule.forRoot(cloudinary, config),
   ],
   declarations: [
@@ -93,7 +107,9 @@ import { CampaignStoreComponent } from './views/campaignstore';
     CampaignComponent,
     BulkStoreUploadComponent,
     BulkCampaignStoreUploadComponent,
-    CampaignStoreComponent
+    CampaignStoreComponent,
+    ViewComponent,
+    ContentBlockComponent
   ],
   providers: [
       DatePipe,
@@ -105,7 +121,8 @@ import { CampaignStoreComponent } from './views/campaignstore';
       SafeHtmlPipe,
       SortByPipe,
       DownloadService,
-      {provide: LocationStrategy, useClass: HashLocationStrategy},
+      AppService,
+      {provide: LocationStrategy, useClass: HashLocationStrategy}, //PathLocationStrategy
       [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
       [{ provide: DEFAULT_TIMEOUT, useValue: 300000 }],
       { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

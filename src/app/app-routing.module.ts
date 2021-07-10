@@ -15,6 +15,8 @@ import { ForgotPasswordComponent } from './views/forgotpassword';
 import { BulkStoreUploadComponent } from './views/bulkstoreupload';
 import { BulkCampaignStoreUploadComponent } from './views/bulkcampaignstoreupload';
 import { CampaignStoreComponent } from './views/campaignstore';
+import { ViewComponent } from './views/view';
+import { ContentBlockComponent } from './views/contentblock';
 
 import { AuthGuard } from './_helpers';
 
@@ -30,10 +32,12 @@ const routes: Routes = [
   { path: 'bulkupload/:id', component: BulkStoreUploadComponent, canActivate: [AuthGuard]},  
   { path: 'bulkcampaignupload/:companyId/:id', component: BulkCampaignStoreUploadComponent, canActivate: [AuthGuard]},  
   { path: 'campaignstores/:companyId/:id', component: CampaignStoreComponent, canActivate: [AuthGuard]},  
+  { path: 'contentblock', component: ContentBlockComponent, canActivate: [AuthGuard]},  
   { path: 'login', component: LoginComponent }, 
   { path: 'reset', component: ResetComponent },
   { path: 'sign-up', component: SignupComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
+  { path: ':shortcode', component: ViewComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

@@ -13,26 +13,6 @@
 	    margin-top: 40px;
 	    text-align: left;
 	    padding: 0px 30px;
-	    span{
-			font-size: 16px;
-		    line-height: 20px;
-		    font-weight: bold;
-		    text-transform: capitalize;    
-	    }
-	    select{
-	    	border: 1px solid #ccc;
-    		margin: 0px 10px 0 0px;
-    		font-size: 12px;
-    		padding: 3px;
-	    }
-	    a{
-		    font-size: 11px;
-		    font-weight: 500;
-		    font-style: italic;
-		    color: #0d6efd;
-		    text-transform: none;
-		    cursor: pointer;
-	    }
     }
 }
 
@@ -67,17 +47,6 @@
 		width: 100%;
     	margin-top: 60px;
     }	
-    .buttons{
-	    width: 100%;
-	    display: flex;
-	    flex-direction: row;
-	    align-items: center;
-	    justify-content: center;
-	    gap: 15px;
-    	a{
-	    	display: flex;
-    	}
-    }
 }
 
 #pnlPasses{	
@@ -157,52 +126,24 @@
     			width:40px;
     		}
     		&.name{
-    			width:140px;
+    			width:80px;
 	    		font-weight: bold;
     			cursor: pointer;
     			text-align: left;
     		}
     		&.type{
-    			width: 100px;
-    			justify-content: flex-start;
-    		}
-    		&.email{
-    			width: 165px;
+    			width: 160px;
     			justify-content: flex-start;
     		}
     		&.isactive{
     			width: 70px;
+    			justify-content: center;
     		}
     		img{
     			height:32px;
     			width:32px;
     			border-radius:8px;
     		}
-			&.sharepass{
-				gap: 2px;
-			    margin-top: 0px;
-			    width: 140px;
-			    justify-items: center;
-			    justify-content: center;
-				a{
-			        padding: 3px 10px;
-    				text-transform: uppercase;
-				    cursor: pointer;
-				    display: flex;
-				    width: auto;
-				    margin: 0;
-				    border: 0;
-				    background: #0052cc;
-				    border-radius: 14px;
-				    font-style: normal;
-				    font-weight: 400;
-				    font-size: 10px;
-				    line-height: 14px;
-				    text-align: center;
-				    color: #fff;
-				    text-decoration: none;
-			    }
-			}
     		&.buttons{
     			gap: 10px;
 			    width: 40px;
@@ -275,11 +216,61 @@
     }
 }
 
+.pnlProduct{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: solid 1px #cfcfcf;
+
+    .pnlProductDetail{
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        padding-top: 60px;
+        h1{
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 37px;
+            color: #17181C;
+        }
+        p{
+            display: flex;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0.25px;
+            color: #17181C;
+            margin-bottom: 15px;
+            svg{
+                display: flex;
+                margin-right: 15px;
+            }
+            span{
+                display: flex;
+            }
+        }
+    }
+    .pnlProductImage{
+        display: flex;
+        width: 448px;
+        img{
+            width: 100%;
+            max-width: 448px;
+            border-radius: 20px;
+        }
+    }
+}
+
 .card{
 	border-radius: 32px;
     margin-bottom: 40px;
-    width: 60%;
-    padding: 0 50px;
+    width: 100%;
+    padding: 0 20px;
     border: 0;
     margin: 0px auto;
 	.card-header{
@@ -336,7 +327,8 @@
     			color: rgba(23, 23, 23, 0.6);
 				font-weight: 500;
 				font-size: 14px;
-				line-height: 24px;    			
+				line-height: 24px;    
+				padding: 10px 0px;			
     		}
     		.invalid-feedback{
     			color: #DE350B;
@@ -374,7 +366,7 @@
 					color: #8F92A1;
 					font-weight:700;
 				}
-		    }		    
+		    }		    	    
 		    &.box4{
     			flex-direction: column;
 			    align-items: flex-start;
@@ -419,6 +411,13 @@
 					    justify-content: center;
 					    display: flex;
 					    cursor: pointer;
+					    flex-direction: column;
+					    a{
+					    	cursor: pointer;
+					    	font-size: 11px;
+						    font-weight: bold;
+						    color: #0d6efd;
+					    }
 					}
 					.pnlLoader{
 						position:relative;
@@ -443,12 +442,13 @@
 					    display: flex;
 					    flex-direction: column;
 					    gap: 10px;
-					    width: 80%;
+					    width: calc(100% - 90px);
 					    .row1{
 					    	display: flex;
 					    	flex-direction: row;
 					    	align-items: center;
 					    	.my-drop-zone{
+					    		width: 100%;
 					    		margin-right: 0px;
 					    		border: dotted 3px lightgray;
 					    		min-height: 20px;

@@ -1,0 +1,232 @@
+<div id="containerWrap" class='view'>
+    <!-- main app container -->
+    <div class="container">
+        <div id="pnlViewHeaderWrap" [style.background-color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.headerColor != null && campaignStore.campaign.headerColor !='')?hexToRGB(campaignStore.campaign.headerColor, false):''">
+        	<div id="pnlViewHeader">    
+                <div class="imagePnl">
+                    <img src="{{(campaignStore != null && campaignStore.store != null)?campaignStore.store.logoUrl:''}}" alt="" />
+                </div>
+                <div class="contentPnl">
+                    <h1 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">{{(campaignStore != null && campaignStore.store != null)?campaignStore.store.name:''}}</h1>
+                    <p>{{(campaignStore != null && campaignStore.store != null)?campaignStore.store.address1:''}}
+                        <br/>
+                    {{(campaignStore != null && campaignStore.store != null)?campaignStore.store.city +","+campaignStore.store.state+","+campaignStore.store.zipcode:''}}</p>
+                </div>      
+        	</div>
+        </div>
+        <div id="pnlViewContent" *ngIf="campaignStore != null && error == '' && module8 != ''">
+            <div class="pnlProduct" [innerHtml]="module8">  
+            </div>
+        </div>
+        <div id="pnlViewModules" class="message" *ngIf="campaignStore == null || error != ''">    
+            <div class="row">
+                {{error}} 
+            </div>
+        </div>
+        <div id="pnlViewModules" *ngIf="campaignStore != null && error == ''">    
+            <div class="row">
+                <div class="module" *ngIf="module3 != ''">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Download Now!</h2>
+                    <p>You can download this special to your phone today.
+                    Tab below to download offer.</p>
+                    <a class="btnLink" (click)="gotUrl(module3, 4, storeModule3);" target="_blank" rel="noopener"> 
+                        <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 0C0.89543 0 0 0.89543 0 2V18C0 19.1046 0.89543 20 2 20H12C13.1046 20 14 19.1046 14 18V2C14 0.89543 13.1046 0 12 0H2ZM12 2H2V18H12V2ZM6 14H8V16H6V14Z" fill="#0052CC"/>
+                        </svg>
+                        Download Digital Pass
+                    </a>
+                </div>        
+                <div class="module" *ngIf="module4 != '' && module4 != 'Address'">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Location Directions</h2>
+                    <p>Find this location by viewing it in maps and get store directions.</p>
+                    <a class="btnLink" (click)="gotUrl(module4, 5, storeModule4);" target="_blank" rel="noopener"> 
+                        <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2.48178 2.79417C-0.945618 6.39409 -0.805758 12.0909 2.79417 15.5183L9.3124 21.7241L15.5183 15.2059C18.9457 11.606 18.8058 5.90918 15.2059 2.48178C11.6059 -0.945616 5.90918 -0.805756 2.48178 2.79417ZM9.243 18.8965L14.0698 13.8268C16.7355 11.0269 16.6267 6.59603 13.8268 3.93028C11.0268 1.26453 6.59603 1.37331 3.93028 4.17325C1.26452 6.97319 1.3733 11.404 4.17324 14.0698L9.243 18.8965ZM9.2721 13.2721C11.4813 13.2721 13.2721 11.4813 13.2721 9.27209C13.2721 7.06299 11.4813 5.27213 9.2721 5.27213C7.063 5.27213 5.27214 7.06299 5.27214 9.27209C5.27214 11.4813 7.063 13.2721 9.2721 13.2721ZM9.2721 11.2721C10.3767 11.2721 11.2721 10.3767 11.2721 9.27209C11.2721 8.16756 10.3767 7.27213 9.2721 7.27213C8.1676 7.27213 7.2721 8.16756 7.2721 9.27209C7.2721 10.3767 8.1676 11.2721 9.2721 11.2721Z" fill="#0052CC"/>
+                        </svg>
+                        Get Directions
+                    </a>
+                </div>           
+                <div class="module" *ngIf="module4 != '' && module4 == 'Address'">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Location Directions</h2>
+                    <p>Find this location by viewing it in maps and get store directions.</p>
+                    <a class="btnLink" (click)="gotUrl('https://www.google.com/maps/search/'+this.campaignStore.store.address1 + ',' + this.campaignStore.store.city + ',' + this.campaignStore.store.state + ',' + this.campaignStore.store.zipcode, 5, storeModule4);" target="_blank" rel="noopener"> 
+                        <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2.48178 2.79417C-0.945618 6.39409 -0.805758 12.0909 2.79417 15.5183L9.3124 21.7241L15.5183 15.2059C18.9457 11.606 18.8058 5.90918 15.2059 2.48178C11.6059 -0.945616 5.90918 -0.805756 2.48178 2.79417ZM9.243 18.8965L14.0698 13.8268C16.7355 11.0269 16.6267 6.59603 13.8268 3.93028C11.0268 1.26453 6.59603 1.37331 3.93028 4.17325C1.26452 6.97319 1.3733 11.404 4.17324 14.0698L9.243 18.8965ZM9.2721 13.2721C11.4813 13.2721 13.2721 11.4813 13.2721 9.27209C13.2721 7.06299 11.4813 5.27213 9.2721 5.27213C7.063 5.27213 5.27214 7.06299 5.27214 9.27209C5.27214 11.4813 7.063 13.2721 9.2721 13.2721ZM9.2721 11.2721C10.3767 11.2721 11.2721 10.3767 11.2721 9.27209C11.2721 8.16756 10.3767 7.27213 9.2721 7.27213C8.1676 7.27213 7.2721 8.16756 7.2721 9.27209C7.2721 10.3767 8.1676 11.2721 9.2721 11.2721Z" fill="#0052CC"/>
+                        </svg>
+                        Get Directions
+                    </a>
+                </div>   
+                <div class="module" *ngIf="module6 != ''">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Open an account</h2>
+                    <p>Want to open an account. Please click button below.</p>
+                    <a class="btnLink" (click)="gotUrl(module6, 7, storeModule6);" target="_blank" rel="noopener"> 
+                        Click here
+                    </a>
+                </div>   
+                <div class="module" *ngIf="module7 != ''">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Signup for an event</h2>
+                    <p>Want to Signup for an event. Please click button below.</p>                    
+                    <a class="btnLink" (click)="gotUrl(module7, 8, storeModule7);" target="_blank" rel="noopener"> 
+                        Click here
+                    </a>
+                </div>       
+                <div class="module" *ngIf="module2 != '' && module2 == 'Form'">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Contact Us</h2>
+                    <p>Complete the form and we will reach out to get you set up.</p>  
+                    <div class="card">
+                        <div class="card-body">                           
+                            <form [formGroup]="formContact" (ngSubmit)="onContactSubmit()">
+                                <div class="form-group box">
+                                    <span class="label">First Name</span>
+                                    <div class="pnlFull">
+                                        <input type="text" formControlName="firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="form-group box">
+                                    <span class="label">Last Name</span>
+                                    <div class="pnlFull">
+                                        <input type="text" formControlName="lastname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="form-group box">
+                                    <span class="label">Email</span>
+                                    <div class="pnlFull">
+                                        <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" autocomplete="off" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group box">
+                                    <span class="label">Message</span>
+                                    <div class="pnlFull">
+                                        <textarea formControlName="message" class="form-control" autocomplete="off"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group box alignItem">
+                                    <button [disabled]="loading" class="btnLink">
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                        Submit
+                                    </button>
+                                </div>
+                                <div *ngIf="success1" class="alert alert-success mt-3 mb-0">{{success1}}</div>
+                                <div *ngIf="error1" class="alert alert-danger mt-3 mb-0">{{error1}}</div>
+                            </form> 
+                        </div>
+                    </div>
+                </div>        
+            </div>   
+            <div class="row">
+                <div class="module" *ngIf="module1 != ''">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Shop Online</h2>
+                    <p>You can shop online now get your order for pickup or delivery.
+                    Get to shopping today!</p>
+                    <a class="btnLink" (click)="gotUrl(module1, 1, storeModule1);" target="_blank" rel="noopener"> 
+                        <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C2.89543 0 2 0.89543 2 2V10C2 11.1046 2.89543 12 4 12H18C19.1046 12 20 11.1046 20 10V2C20 0.89543 19.1046 0 18 0H4ZM18 2H4V10H18V2ZM0 15C0 14.4477 0.44772 14 1 14H21C21.5523 14 22 14.4477 22 15C22 15.5523 21.5523 16 21 16H1C0.44772 16 0 15.5523 0 15Z" fill="#0052CC"/>
+                        </svg>
+                        Shop Online
+                    </a>
+                </div>        
+                <div class="module" *ngIf="module2 != '' && module2 != 'Form'">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Contact Us</h2>
+                    <p>If you have any questions call us with any questions or concerns.</p>
+                    <a class="btnLink" href="tel:{{this.campaignStore.store.phone}}"> 
+                        <svg width="22" height="10" viewBox="0 0 22 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.9254 3.37455C15.0582 -1.12485 6.87526 -1.12485 1.00813 3.37455C0.399234 3.86238 0.0336341 4.58901 0.00625212 5.36577C-0.0466862 6.13291 0.238505 6.88503 0.787713 7.42669L2.55101 9.21879C3.48165 10.1433 4.94937 10.2613 6.01749 9.49756L6.48837 9.17896C6.80901 8.97334 7.14379 8.79036 7.49024 8.63138C8.37333 8.24383 8.80921 7.24758 8.49212 6.34147L8.40195 6.10252C10.1174 5.66461 11.9163 5.66461 13.6317 6.10252L13.5416 6.34147C13.2245 7.24758 13.6603 8.24383 14.5434 8.63138C14.8899 8.79036 15.2247 8.97334 15.5453 9.17896L16.0162 9.49756C16.4634 9.82372 17.0043 9.99825 17.5591 9.99537C18.2797 9.99625 18.9713 9.71345 19.4827 9.20883L21.2961 7.39682C21.8097 6.8421 22.0612 6.09613 21.9873 5.34586C21.9395 4.56631 21.5517 3.84634 20.9254 3.37455ZM19.7999 5.97392L17.9999 7.77708C17.7742 8.0113 17.4135 8.05308 17.1399 7.87671C16.9499 7.73723 16.7599 7.60773 16.5499 7.47822C16.1978 7.25638 15.8339 7.05352 15.4599 6.87052L15.8599 5.78463C16.0475 5.26745 15.7789 4.69671 15.2599 4.50946C12.5148 3.51352 9.50517 3.51352 6.76005 4.50946C6.24107 4.69671 5.97253 5.26745 6.16006 5.78463L6.56006 6.88048C6.18097 7.05615 5.81356 7.2558 5.46007 7.47822L4.88008 7.87671C4.6046 8.0736 4.22419 8.03054 4.00009 7.77708L2.20011 5.97392C2.06903 5.84544 1.99671 5.66893 2.00011 5.48576C2.0169 5.27898 2.11811 5.08812 2.28011 4.95776C7.41947 1.01408 14.5805 1.01408 19.7199 4.95776C19.8819 5.08812 19.9831 5.27898 19.9999 5.48576C20.0033 5.66893 19.931 5.84544 19.7999 5.97392Z" fill="#0052CC"/>
+                        </svg>
+                        Let's Chat
+                    </a>
+                </div>        
+                <div class="module" *ngIf="module5 != '' && module5 != 'Form'">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Calendar</h2>
+                    <p>Want to schedule a demo. Please book a meeting below.</p>                    
+                    <a class="btnLink" (click)="gotUrl(this.campaignStore.store.calendarUrl, 6, storeModule5);" target="_blank" rel="noopener"> 
+                        Go To Calendar
+                    </a>
+                </div>         
+                <div class="module" *ngIf="module5 != '' && module5 == 'Form'">
+                    <h2 [style.color]="(campaignStore != null && campaignStore.campaign != null && campaignStore.campaign.textColor != null && campaignStore.campaign.textColor !='')?hexToRGB(campaignStore.campaign.textColor, false):''">Calendar</h2>
+                    <p>Want to schedule a demo. Please book a meeting below.</p>                      
+                    <div class="card">
+                        <div class="card-body">                           
+                            <form [formGroup]="formCalendar" (ngSubmit)="onCalendarSubmit()">
+                                <div class="form-group box">
+                                    <span class="label">Select Date</span>
+                                    <div class="pnlFull">
+                                        <mat-form-field appearance="fill">
+                                          <input matInput [matDatepicker]="date" formControlName="date" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && f1.date.errors }" autocomplete="off" [min]="minDate" placeholder="dd/MM/yyyy" />
+                                          <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                                          <mat-datepicker #date></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="form-group box">
+                                    <span class="label">Select Time</span>
+                                    <div class="pnlFull bgColor">
+                                        <input [ngxTimepicker]="time" formControlName="time" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && f1.time.errors }" autocomplete="off" />
+                                        <ngx-material-timepicker-toggle [for]="time"></ngx-material-timepicker-toggle>
+                                        <ngx-material-timepicker #time></ngx-material-timepicker>
+                                    </div>
+                                </div>
+                                <div *ngIf="f1.date.value != '' && f1.time.value != ''">
+                                    <h3>Confirm meeting</h3>
+                                    <p>{{f1.date.value | date:'fullDate'}} {{f1.time.value}}</p>
+                                    <div class="form-group box">
+                                        <span class="label">First Name</span>
+                                        <div class="pnlFull">
+                                            <input type="text" formControlName="firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && f1.firstname.errors }" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group box">
+                                        <span class="label">Last Name</span>
+                                        <div class="pnlFull">
+                                            <input type="text" formControlName="lastname" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && f1.lastname.errors }" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group box">
+                                        <span class="label">Email</span>
+                                        <div class="pnlFull">
+                                            <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && f1.email.errors }" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group box alignItem">
+                                        <button [disabled]="loading1" class="btnLink">
+                                            <span *ngIf="loading1" class="spinner-border spinner-border-sm mr-1"></span>
+                                            Submit
+                                        </button>
+                                    </div>                                
+                                </div>
+                                <div *ngIf="success2" class="alert alert-success mt-3 mb-0">{{success2}}</div>
+                                <div *ngIf="error2" class="alert alert-danger mt-3 mb-0">{{error2}}</div>
+                            </form> 
+                        </div>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+    <div id="footerWrap">
+        <div id="footer">
+            <p>Contact with us</p>
+            <div class="footerNav">
+                <a target="_blank" title="Twitter" href="{{(campaignStore != null && campaignStore.store != null)?this.campaignStore.store.contactFormUrl:''}}" rel="noopener">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="12" fill-opacity="0.1"></circle><g clip-path="url(#clip0)"><path d="M24 11.0374C23.4113 11.2987 22.7787 11.4747 22.1147 11.554C22.7927 11.148 23.3133 10.5047 23.558 9.73805C22.924 10.114 22.2213 10.3874 21.4733 10.5347C20.8753 9.89671 20.0213 9.49805 19.0773 9.49805C16.958 9.49805 15.4007 11.4754 15.8793 13.528C13.152 13.3914 10.7333 12.0847 9.114 10.0987C8.254 11.574 8.668 13.504 10.1293 14.4814C9.592 14.464 9.08533 14.3167 8.64333 14.0707C8.60733 15.5914 9.69733 17.014 11.276 17.3307C10.814 17.456 10.308 17.4854 9.79333 17.3867C10.2107 18.6907 11.4227 19.6394 12.86 19.666C11.48 20.748 9.74133 21.2314 8 21.026C9.45267 21.9574 11.1787 22.5007 13.032 22.5007C19.1267 22.5007 22.57 17.3534 22.362 12.7367C23.0033 12.2734 23.56 11.6954 24 11.0374Z" fill="#8F92A1"></path></g><defs><clipPath id="clip0"><rect width="16" height="16" fill="white" transform="translate(8 8)"></rect></clipPath></defs></svg>
+                </a>
+                <a target="_blank" title="Facebook" href="{{(campaignStore != null && campaignStore.store != null)?this.campaignStore.store.facebookUrl:''}}" rel="noopener">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="12" fill-opacity="0.1"></circle><path fill-rule="evenodd" clip-rule="evenodd" d="M14.1317 22.3327H16.7983V16.9927H19.2011L19.465 14.3392H16.7983V12.9993C16.7983 12.6312 17.0969 12.3327 17.465 12.3327H19.465V9.66602H17.465C15.6241 9.66602 14.1317 11.1584 14.1317 12.9993V14.3392H12.7984L12.5344 16.9927H14.1317V22.3327Z" fill="#8F92A1"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<jw-modal id="ContactFormModal">
+    <h1>Request Sent!</h1>
+    <p>Your message has been sent to store admin.</p>
+    <a class="btn" (click)="closeModal('ContactFormModal');">Got It</a>
+</jw-modal>
+<jw-modal id="CalendarFormModal">
+    <h1>Booking Confirmed!</h1>
+    <p>You are now booked. An invitation has been emailed to you. Please check your inbox.</p>
+    <div class="dt">{{f1.date.value | date:'longDate'}}</div>
+    <div class="tm">{{f1.time.value}}</div>
+    <a class="btn" (click)="closeModal('CalendarFormModal');">Got It</a>
+</jw-modal>

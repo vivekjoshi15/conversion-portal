@@ -9,10 +9,12 @@
         <h4>Manage Campaign Stores (<span>Campaign: {{campaignName}}</span>)</h4>
         <div id="content">
             <div class="contentPanel">
-                <a (click)="goto()" class="btnBack" title="Back to Manage Campaigns">Back to Campaigns</a>
+                <a (click)="downloadCSV()" class="btnBack btnDownload" title="Download Conversion Page URL's CSV File" *ngIf="campaigns.length > 0 && !isNew && !isEdit && !isReport">Download Conversion Page URL's</a>
+                <a (click)="goto()" class="btnBack" title="Back to Manage Campaigns" *ngIf="!isNew && !isEdit && !isReport">Back to Campaigns</a>
+                <a (click)="back()" class="btnBack" title="Back to Manage Campaigns" *ngIf="!isNew && !isEdit && isReport">Back to List</a>
             </div>
-        	<div id="pnlPasses" *ngIf="!isForm">
-        		<div class="pass header"  *ngIf="campaigns.length > 0">
+        	<div id="pnlPasses" *ngIf="!isForm && !isReport">
+        		<div class="pass header" *ngIf="campaigns.length > 0">
                     <div>
             			<div class="name" [class.active]="order === 'storeId'" (click)="setOrder('storeId')" title="Sort By Store Id">
                             Store Id
@@ -22,20 +24,20 @@
                             Unique Url
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
                         </div>
-                        <div class="type" [class.active]="order === 'module1'" (click)="setOrder('module1')" title="Sort By Purchase Link">
-                            Purchase Link
+                        <div class="type" [class.active]="order === 'module1'" (click)="setOrder('module1')" title="Sort By Shop Online">
+                            Shop Online
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
                         </div>
-                        <div class="type" [class.active]="order === 'module2'" (click)="setOrder('module2')" title="Sort By View Sale">
-                            View Sale
+                        <div class="type" [class.active]="order === 'module2'" (click)="setOrder('module2')" title="Sort By Contact Form">
+                            Contact Form
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
                         </div>
                         <div class="type" [class.active]="order === 'module3'" (click)="setOrder('module3')" title="Sort By Download a offer">
                             Download a offer
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
                         </div>
-                        <div class="type" [class.active]="order === 'module4'" (click)="setOrder('module4')" title="Sort By Signup">
-                            Signup
+                        <div class="type" [class.active]="order === 'module4'" (click)="setOrder('module4')" title="Sort By Location Directions">
+                            Location Directions
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
                         </div>
                         <div class="type" [class.active]="order === 'module5'" (click)="setOrder('module5')" title="Sort By Book Appointment">
@@ -62,17 +64,17 @@
         		</div>
         		<div class="pass" [ngClass]="{sel: selView == i }"  *ngFor="let campaign of campaigns | orderBy: order : reverse; let i = index" [attr.data-index]="i">
                     <div class="name" (click)="edit(campaign)" title="click here to edit/view campaign store">{{campaign.storeId}}</div> 
-                    <div class="url">{{campaign.uniqueUrl}}</div>    
-                    <div class="type">{{(campaign.module1 != null && campaign.module1 != '')?'Y':'N'}}</div>        
-                    <div class="type">{{(campaign.module2 != null && campaign.module2 != '')?'Y':'N'}}</div>
-                    <div class="type">{{(campaign.module3 != null && campaign.module3 != '')?'Y':'N'}}</div>       
-                    <div class="type">{{(campaign.module4 != null && campaign.module4 != '')?'Y':'N'}}</div>
-                    <div class="type">{{(campaign.module5 != null && campaign.module5 != '')?'Y':'N'}}</div>       
-                    <div class="type">{{(campaign.module6 != null && campaign.module6 != '')?'Y':'N'}}</div>        
-                    <div class="type">{{(campaign.module7 != null && campaign.module7 != '')?'Y':'N'}}</div>        
-                    <div class="type">{{(campaign.module8 != null && campaign.module8 != '')?'Y':'N'}}</div> 
+                    <div class="url"><a href="{{campaign.uniqueUrl}}" title="click here to view page" target="_blank">{{campaign.uniqueUrl}}</a></div>    
+                    <div class="type" title="{{campaign.module1}}">{{(campaign.module1 != null && campaign.module1 != '')?'Y':'N'}}</div>        
+                    <div class="type" title="{{campaign.module2}}">{{(campaign.module2 != null && campaign.module2 != '')?'Y':'N'}}</div>
+                    <div class="type" title="{{campaign.module3}}">{{(campaign.module3 != null && campaign.module3 != '')?'Y':'N'}}</div>       
+                    <div class="type" title="{{campaign.module4}}">{{(campaign.module4 != null && campaign.module4 != '')?'Y':'N'}}</div>
+                    <div class="type" title="{{campaign.module5}}">{{(campaign.module5 != null && campaign.module5 != '')?'Y':'N'}}</div>       
+                    <div class="type" title="{{campaign.module6}}">{{(campaign.module6 != null && campaign.module6 != '')?'Y':'N'}}</div>        
+                    <div class="type" title="{{campaign.module7}}">{{(campaign.module7 != null && campaign.module7 != '')?'Y':'N'}}</div>        
+                    <div class="type" title="{{campaign.module8}}">{{(campaign.module8 != null && campaign.module8 != '')?'Y':'N'}}</div> 
             		<div class="buttons">
-                        <a title="View Report">
+                        <a title="View Report" (click)="viewReport(campaign.id)">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-gwj-c83="" fill-rule="evenodd" clip-rule="evenodd" d="M23.3334 15.9993C23.3334 20.0494 20.0501 23.3327 16.0001 23.3327C11.95 23.3327 8.66675 20.0494 8.66675 15.9993C8.66675 11.9493 11.95 8.66602 16.0001 8.66602C20.0501 8.66602 23.3334 11.9493 23.3334 15.9993ZM22.0001 15.9993C22.0001 19.3131 19.3138 21.9993 16.0001 21.9993C12.6864 21.9993 10.0001 19.3131 10.0001 15.9993C10.0001 12.6856 12.6864 9.99935 16.0001 9.99935C19.3138 9.99935 22.0001 12.6856 22.0001 15.9993ZM16.0001 11.3327C18.5774 11.3327 20.6667 13.422 20.6667 15.9993V16.666H19.3334V15.9993C19.3334 14.1584 17.841 12.666 16.0001 12.666C14.1591 12.666 12.6667 14.1584 12.6667 15.9993V16.666H11.3334V15.9993C11.3334 13.422 13.4228 11.3327 16.0001 11.3327ZM15.3334 13.9993V16.7798C14.5566 17.0543 14.0001 17.7952 14.0001 18.666C14.0001 19.7706 14.8955 20.666 16.0001 20.666C17.1047 20.666 18.0001 19.7706 18.0001 18.666C18.0001 17.7952 17.4435 17.0543 16.6667 16.7798V13.9993H15.3334ZM15.3334 18.666C15.3334 18.2978 15.6319 17.9993 16.0001 17.9993C16.3683 17.9993 16.6667 18.2978 16.6667 18.666C16.6667 19.0342 16.3683 19.3327 16.0001 19.3327C15.6319 19.3327 15.3334 19.0342 15.3334 18.666Z" fill="#8F92A1"></path></svg>
                         </a>
         	    		<a (click)="removeCampaign(campaign.id)" title="remove campaign store">
@@ -82,30 +84,84 @@
                         </a>
             		</div>
         		</div>
+                <mat-paginator  [pageSize]="pageSize" 
+                                [pageSizeOptions]="[5, 10, 20]" 
+                                [showFirstLastButtons]="true" 
+                                [length]="totalSize"
+                                (page)="handlePage($event)" 
+                                *ngIf="campaigns.length > 0 && dataSource.length >= pageSize">
+                </mat-paginator>
         	</div>
-            <div id="pnlNoContent" *ngIf="!loading && !isForm && campaigns.length == 0">
+            <div id="pnlNoContent" *ngIf="!loading && !isReport && !isForm && campaigns.length == 0">
                 <p>No Campaign Store Found</p>
                 <div class="buttons">
                     <a (click)="new()" class="btnCreate" title="Add Campaign Store">Add Store</a>
                     <a routerLink="/bulkcampaignupload/{{companyId}}/{{id}}" class="btnCreate" title="Upload Campaign Stores">Upload Stores</a>
                 </div>
             </div>
-            <div class="card" *ngIf="isForm">
+            <div class="card" *ngIf="isForm && !isReport">
                 <h4 class="card-header text-center">{{ (campaign != null)?"Update Campaign Store":"Create Campaign Store"}}</h4>
                 <div class="card-body">
                     <form [formGroup]="form" (ngSubmit)="onSubmit()" style="margin-top: 40px;">
                         <div class="form-group box">
-                            <span class="label">Campaign Name</span>
+                            <span class="label">Store Id</span>
                             <div class="pnlFull">
                                 <input type="hidden" formControlName="id"/>
-                                <input type="hidden" formControlName="uniqueUrl"/>
-                                <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Enter Campaign Name" autocomplete="off" />
+                                <input type="text" formControlName="storeId" class="form-control" readonly="readonly" />
                             </div>
                         </div>
                         <div class="form-group box">
-                            <span class="label">Header Text</span>
+                            <span class="label">Unique Url</span>
                             <div class="pnlFull">
-                                <input type="text" formControlName="headerText" class="form-control" placeholder="Enter Header Text" autocomplete="off" />
+                                <input type="text" formControlName="uniqueUrl" class="form-control" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Shop Online</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="module1" class="form-control" placeholder="Enter Url" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Contact Form</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="module2" class="form-control" placeholder="Enter Url/Form" autocomplete="off" />
+                            </div>
+                        </div>                        
+                        <div class="form-group box">
+                            <span class="label">Download a offer</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="module3" class="form-control" placeholder="Enter Url" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Location Directions</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="module4" class="form-control" placeholder="Enter Url/Address" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Book Appointment</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="module5" class="form-control" placeholder="Enter Url/Form" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Open an account</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="module6" class="form-control" placeholder="Enter Url" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Signup for an event</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="module7" class="form-control" placeholder="Enter Url" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Content Block</span>
+                            <div class="pnlFull" style="text-align: left;">
+                                <angular-editor formControlName="module8" [placeholder]="'Enter content here.'"></angular-editor>
                             </div>
                         </div>
                         <div class="form-group box noborder">
@@ -126,6 +182,48 @@
                         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
                     </form> 
                 </div>
+            </div>
+            <div id="pnlPasses" *ngIf="isReport">
+                <h4 style="text-align: center; margin-top: 10px; width: 100%;">Campaign Report</h4>
+                <div class="pass header" *ngIf="stats.length > 0">
+                    <div>
+                        <div class="report" [class.active]="order === 'storeId'" (click)="setOrder('storeId')" title="Sort By Store Id">
+                            Store Id
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
+                        </div>
+                        <div class="report" [class.active]="order === 'os'" (click)="setOrder('os')" title="Sort By OS">
+                            OS
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
+                        <div class="url" [class.active]="order === 'browser'" (click)="setOrder('browser')" title="Sort By Unique Url">
+                            Browser
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
+                        </div>
+                        <div class="report" [class.active]="order === 'ipAddress'" (click)="setOrder('ipAddress')" title="Sort By Shop Online">
+                            IP Address
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
+                        </div>
+                        <div class="report" [class.active]="order === 'moduleId'" (click)="setOrder('moduleId')" title="Sort By Contact Form">
+                            Module
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+                        </div>
+                        <div class="report" [class.active]="order === 'createdDate'" (click)="setOrder('createdDate')" title="Sort By Download a offer">
+                            Datetime
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
+                        </div>
+                    </div>
+                </div>
+                <div class="pass" *ngFor="let stat of stats | orderBy: order : reverse; let j = index" [attr.data-index]="j">
+                    <div class="report">{{stat.store.storeId}}</div>
+                    <div class="report">{{stat.os}}</div>
+                    <div class="url">{{stat.browser}}</div>
+                    <div class="report">{{stat.ipAddress}}</div>
+                    <div class="report">{{stat.module.name}}</div>
+                    <div class="report">{{(stat.createdDate!=null)?(stat.createdDate|date :'short'):""}}</div>  
+                </div>
+            </div>
+            <div id="pnlNoContent" *ngIf="!loading && isReport && stats.length == 0">
+                <p>No statistic found</p>
             </div>
         </div>
     </div>

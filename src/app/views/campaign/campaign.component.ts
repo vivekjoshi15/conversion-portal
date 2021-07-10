@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Color } from '@angular-material-components/color-picker';
 import { first } from 'rxjs/operators';
+import { PageEvent } from '@angular/material/paginator';
 
 import { AuthenticationService, LoaderService } from '../../_services';
 import { User } from '../../_models';
@@ -25,6 +26,7 @@ export class CampaignComponent implements OnInit {
     success: any = '';
     companyId: any= 0;    
     companyName: string = "";
+    companies: any = [];
     campaigns: any = [];
     campaign: any = null;
     static: any = null;
@@ -37,6 +39,12 @@ export class CampaignComponent implements OnInit {
     disabled = false;
     color: ThemePalette = 'primary';
     touchUi = false;
+
+    pageSize: number = 10;
+    currentPage: number = 0;
+    totalSize: number = 0;
+    dataSource: any = [];
+    pageEvent: PageEvent;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -71,8 +79,45 @@ export class CampaignComponent implements OnInit {
         setTimeout(() => this.showLoader = val, 0);
       });
 
-      this.getCompany();
+      this.getCompanies(true);
     }  
+
+    getCompanies(isLoad = false){
+
+        this.loaderService.display(true);
+        this.loading = true;
+        this.authenticationService.getCompanies(this.currentUser.apikey)
+                .pipe(first())
+                .subscribe(
+                    (data: any) => {
+                        if(data != null){
+                          this.companies=data;
+                          this.error = "";
+                          this.companyName = "";
+                          if(this.companyId != 0){
+                            this.getCompany();
+                          }
+                          else{
+                            this.loading = false;
+                            this.loaderService.display(false);
+                          }
+                        }
+                        else{
+                        this.companies = [];
+                          this.companyName = "";
+                          this.error = "No company found";
+                          this.loading = false;
+                          this.loaderService.display(false);
+                        }
+                    },
+                    (error: any) => {
+                        this.companies = [];
+                        this.companyName = "";
+                        this.error = error;
+                        this.loading = false;
+                        this.loaderService.display(false);
+                    });
+    }
 
     getCompany(){
       if(this.companyId != 0){
@@ -103,6 +148,23 @@ export class CampaignComponent implements OnInit {
       }
     }  
 
+    changeCompany(e){
+      if(e.target.value != ""){
+        this.companyId = e.target.value;    
+        this.getCompany();
+      }
+      else{   
+        this.companyId = 0;
+        this.companyName = "";
+        this.campaigns = []; 
+      }
+    }
+
+    resetCompany(){
+      this.companyId = 0;
+      this.companyName = ""; 
+    }
+
     getCampaigns(){
       this.loaderService.display(true);
       this.loading = true;
@@ -111,11 +173,17 @@ export class CampaignComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     if(data != null && data.length > 0){
+                        this.dataSource = data;
                         this.campaigns = data;
+
+                        this.totalSize = this.dataSource.length;
+                        this.iterator();
+
                         this.loading = false;
                         this.loaderService.display(false);
                     }
                     else{
+                        this.dataSource = [];
                         this.campaigns = [];
                         this.error = "no campaign found";
                         this.loading = false;
@@ -123,6 +191,7 @@ export class CampaignComponent implements OnInit {
                     }
                 },
                 (error: any) => {
+                    this.dataSource = [];
                     this.campaigns = [];
                     this.error = error;
                     this.loading = false;
@@ -317,15 +386,35 @@ export class CampaignComponent implements OnInit {
     get f() { return this.form.controls; }
 
     hexToRGB(hex: any, alpha: any) {
-      hex = hex.replace('#','');
-      var r = parseInt(hex.substring(0,2), 16);
-      var g = parseInt(hex.substring(2,4), 16);
-      var b = parseInt(hex.substring(4,6), 16);
+      if(hex != null && hex != ''){
+        hex = hex.replace('#','');
+        var r = parseInt(hex.substring(0,2), 16);
+        var g = parseInt(hex.substring(2,4), 16);
+        var b = parseInt(hex.substring(4,6), 16);
 
-      if (alpha) {
-          return new Color(r, g, b, alpha/100);
-      } else {
-          return new Color(r, g, b);
+        if (alpha) {
+            return new Color(r, g, b, alpha/100);
+        } else {
+            return new Color(r, g, b);
+        }
       }
-  }
+      else{
+        return '';
+      }
+    }
+
+    public handlePage(e: any) {
+      this.pageEvent = e;
+      this.currentPage = e.pageIndex;
+      this.pageSize = e.pageSize;
+      this.iterator();
+      return this.pageEvent;
+    }
+
+    private iterator() {
+      const end = (this.currentPage + 1) * this.pageSize;
+      const start = this.currentPage * this.pageSize;
+      const part = this.dataSource.slice(start, end);
+      this.campaigns = part;
+    }
 }

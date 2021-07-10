@@ -362,44 +362,6 @@ export class AuthenticationService {
             }));
     }
 
-    getStoreCampaigns(Id: number, campaignId: number, apikey?: string){
-        var apiKey: string=(apikey != undefined)?apikey as string:'';
-
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type':  'application/json',
-            'Accept':  'application/json',
-            'apikey': atob(apiKey)
-          })
-        };
-
-        var url= environment.apiApiUrl +'/CampaignStore/getStoreCampaigns/' + Id + '/' + campaignId;   
-
-        return this.http.get<any>(`${url}`, httpOptions!)
-            .pipe(map((store: any) => {
-                return store;
-            }));
-    }
-
-    getCampaignStores(companyId: number, campaignId: number, apikey?: string){
-        var apiKey: string=(apikey != undefined)?apikey as string:'';
-
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type':  'application/json',
-            'Accept':  'application/json',
-            'apikey': atob(apiKey)
-          })
-        };
-
-        var url= environment.apiApiUrl +'/CampaignStore/getCampaignStores/' + companyId + '/' + campaignId;   
-
-        return this.http.get<any>(`${url}`, httpOptions!)
-            .pipe(map((store: any) => {
-                return store;
-            }));
-    }
-
     deleteCampaign(Id: number){
         
         var url= environment.apiApiUrl +'/Campaign/'+ Id;   
@@ -480,25 +442,6 @@ export class AuthenticationService {
         };
 
         var url= environment.apiApiUrl +'/Store';   
-
-        return this.http.get<any>(`${url}`, httpOptions!)
-            .pipe(map((store: any) => {
-                return store;
-            }));
-    }
-
-    getCompanyStores(Id: number,apikey?: string){
-        var apiKey: string=(apikey != undefined)?apikey as string:'';
-
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type':  'application/json',
-            'Accept':  'application/json',
-            'apikey': atob(apiKey)
-          })
-        };
-
-        var url= environment.apiApiUrl +'/Store/getCompanyStores/' + Id;   
 
         return this.http.get<any>(`${url}`, httpOptions!)
             .pipe(map((store: any) => {
@@ -591,6 +534,273 @@ export class AuthenticationService {
             .pipe(map((result: any) => {
                 return result;
             }));
+    } 
+
+    getStoreCampaigns(Id: number, campaignId: number, apikey?: string){
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStore/getStoreCampaigns/' + Id + '/' + campaignId;   
+
+        return this.http.get<any>(`${url}`, httpOptions!)
+            .pipe(map((store: any) => {
+                return store;
+            }));
+    }
+
+    getCampaignStores(companyId: number, campaignId: number, apikey?: string){
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStore/getCampaignStores/' + companyId + '/' + campaignId;   
+
+        return this.http.get<any>(`${url}`, httpOptions!)
+            .pipe(map((store: any) => {
+                return store;
+            }));
+    }
+
+    getCompanyStores(Id: number,apikey?: string){
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/Store/getCompanyStores/' + Id;   
+
+        return this.http.get<any>(`${url}`, httpOptions!)
+            .pipe(map((store: any) => {
+                return store;
+            }));
+    } 
+
+    getCampaignStoreByShortCode(shortCode: string){
+        var apiKey: string= '';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStore/getCampaignStoreByShortCode/' + shortCode;   
+
+        return this.http.get<any>(`${url}`, httpOptions!)
+            .pipe(map((store: any) => {
+                return store;
+            }));
+    } 
+
+    createCampaignStore(store: any, apikey?: string) {
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStore/createCampaignStoreModules';  
+       
+        return this.http.post<any>(`${url}`, JSON.stringify(store), httpOptions! )
+            .pipe(map((result: any) => {
+                return result;
+            }));
+    }      
+
+    updateCampaignStore(store: any, apikey?: string) {
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStore/updateCampaignStoreModules/' + store.Id;  
+        
+        return this.http.put<any>(`${url}`, JSON.stringify(store), httpOptions! )
+            .pipe(map((result: any) => {
+                return result;
+            }));
+    }     
+
+    deleteCampaignStore(Id: number){
+        
+        var url= environment.apiApiUrl +'/CampaignStore/deleteCampaignStoreModules/'+ Id;   
+
+        return this.http.delete<any>(`${url}`)
+            .pipe(map((store: any) => {                
+                return store;
+            }));
+    }
+
+    getContentBlocks(apikey?: string){
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/ContentBlock';   
+
+        return this.http.get<any>(`${url}`, httpOptions!)
+            .pipe(map((module: any) => {
+                return module;
+            }));
+    }
+
+    deleteContentBlock(Id: number){
+        
+        var url= environment.apiApiUrl +'/ContentBlock/'+ Id;   
+
+        return this.http.delete<any>(`${url}`)
+            .pipe(map((module: any) => {                
+                return module;
+            }));
+    }
+
+    createContentBlock(contentBlock: any, apikey?: string) {
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/ContentBlock';  
+       
+        return this.http.post<any>(`${url}`, JSON.stringify(contentBlock), httpOptions! )
+            .pipe(map((result: any) => {
+                return result;
+            }));
+    }    
+
+    updateContentBlock(contentBlock: any, apikey?: string) {
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/ContentBlock/' + contentBlock.Id;  
+        
+        return this.http.put<any>(`${url}`, JSON.stringify(contentBlock), httpOptions! )
+            .pipe(map((result: any) => {
+                return result;
+            }));
+    }
+    
+    createCampaignStatistic(campaignStatistic: any, apikey?: string) {
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStatistic';  
+       
+        return this.http.post<any>(`${url}`, JSON.stringify(campaignStatistic), httpOptions! )
+            .pipe(map((result: any) => {
+                return result;
+            }));
+    }
+
+    getCampaignStatisticById(Id: number, apikey?: string){
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStatistic/CampaignStatisticByCampaignStore/' + Id;    
+
+        return this.http.get<any>(`${url}`, httpOptions!)
+            .pipe(map((module: any) => {
+                return module;
+            }));
+    }
+
+    getCampaignStatistic(apikey?: string){
+        var apiKey: string=(apikey != undefined)?apikey as string:'';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStatistic';   
+
+        return this.http.get<any>(`${url}`, httpOptions!)
+            .pipe(map((module: any) => {
+                return module;
+            }));
+    }
+
+    getIPAddress(apikey?: string){
+        var apiKey: string='';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+
+        var url= environment.apiApiUrl +'/CampaignStatistic/getIPAddress';   
+
+        return this.http.get<{ip:string}>(`${url}`, httpOptions!)
+            .pipe(map((data: any) => {
+              return data;
+            }));
     }
 
     getPassStatic(templateId: number){
@@ -603,6 +813,46 @@ export class AuthenticationService {
                     return user;
                 }
                 return user;
+            }));
+    }       
+
+    sendContact(contactUs: any) {
+        var apiKey: string='';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+        httpOptions.headers = httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+
+        var url= environment.apiApiUrl +'/Company/sendContact';  
+        
+        return this.http.post<any>(`${url}`, JSON.stringify(contactUs), httpOptions! )
+            .pipe(map((result: any) => {
+                return result;
+            }));
+    }       
+
+    sendCalendar(calendar: any) {
+        var apiKey: string='';
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json',
+            'apikey': atob(apiKey)
+          })
+        };
+        httpOptions.headers = httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+
+        var url= environment.apiApiUrl +'/Company/sendCalendar';  
+        
+        return this.http.post<any>(`${url}`, JSON.stringify(calendar), httpOptions! )
+            .pipe(map((result: any) => {
+                return result;
             }));
     }
 

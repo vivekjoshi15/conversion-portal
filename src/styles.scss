@@ -216,6 +216,21 @@ app-root{
 			}
 		}
 	}
+	&.view{
+		background-color: #fff;
+		gap: 80px;
+		.container{
+    		display: flex;
+		    align-content: flex-start;
+		    align-items: center;
+		    justify-content: flex-start;
+		    justify-items: flex-start;
+		    flex-direction: column;
+		    flex-wrap: wrap;
+		    background-color: transparent;
+		    gap: 20px;
+		}
+	}
 }
 
 .headerWrap{	
@@ -516,12 +531,14 @@ app-campaignstore,
 app-login,
 app-reset,
 app-signup,
+app-view,
 app-module,
 app-store,
 app-bulkstoreupload,
 app-bulkcampaignstoreupload,
 app-forgotpassword,
 app-footer,
+app-contentblock,
 app-shell{
 	display: flex;
     width: 100%;
@@ -532,3 +549,91 @@ app-shell{
 .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button .mat-icon {
 	color: #000!important;
 }
+
+
+
+    .pnlProductDetail{
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        padding-top: 60px;
+        h1{
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 37px;
+            color: #17181C;
+        }
+        p{
+            display: flex;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0.25px;
+            color: #17181C;
+            margin-bottom: 15px;
+            svg{
+                display: flex;
+                margin-right: 15px;
+            }
+            span{
+                display: flex;
+            }
+        }
+    }
+    .pnlProductImage{
+        display: flex;
+        width: 448px;
+        img{
+            width: 100%;
+            max-width: 448px;
+            border-radius: 20px;
+        }
+    }
+
+.mat-paginator-outer-container {
+	.mat-paginator-container {
+		justify-content: center;
+	    flex-wrap: wrap;
+	    width: 100%;
+	    gap: 40px;
+	}
+}
+
+.mat-paginator {
+    display: block;
+    background-color: #8f8d9214;
+    width: 100%;
+    color: #424348;
+    border-radius: 16px;
+}
+
+.mat-paginator-page-size-select{
+}
+
+.mat-select-value{
+    color: #424348;
+}
+
+.mat-select-arrow {
+    color: #424348;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: #424348;
+}
+
+@media only screen and (min-width: 0px) and (max-width : 768px) {
+
+    .pnlProductDetail{
+        padding: 0px;
+    }
+    .pnlProductImage{
+        width: 100%;
+    }
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -39,7 +39,7 @@
                 <div class="pnlPasses" *ngIf="stores.length > 0">  
                 	<h3>Store Data Preview </h3>              	
 		    		<div class="pass header">
-		                <div class="logo">
+		                <div class="logo" title="Store Image">
 		                </div>
 		    			<div class="type" [class.active]="order === 'StoreId'" (click)="setOrder('StoreId')" title="Sort By Store Id">
 		                    Store Id
@@ -82,7 +82,7 @@
 		    		</div>
 		    		<div id="pnlData">
 			    		<div class="pass"  *ngFor="let store of stores | orderBy: order : reverse; let i = index" [attr.data-index]="i">
-        					<div class="logo"><img src={{store.LogoUrl}} alt="" /></div>
+        					<div class="logo" title="Store Image"><img src={{store.LogoUrl}} alt="Store Image"  *ngIf="store.LogoUrl != null && store.LogoUrl != ''" /></div>
 			        		<div class="type">{{store.StoreId}}</div>
 			        		<div class="name">{{store.Name}}</div>	     
 			        		<div class="type">{{store.Phone}}</div>	    	     
@@ -95,9 +95,9 @@
 		    		</div>
                 </div>
                 <div class="pnlPasses" *ngIf="invalidStores.length > 0">  
-                	<h3>Invalid Stores</h3>              	
+                	<h3>Stores Updated</h3>              	
 		    		<div class="pass header">
-		                <div class="logo">
+		                <div class="logo" title="Store Image">
 		                </div>
 		    			<div class="type" [class.active]="order === 'StoreId'" (click)="setOrder('storeId')" title="Sort By Store Id">
 		                    Store Id
@@ -134,7 +134,7 @@
 		    		</div>
 		    		<div id="pnlData">
 			    		<div class="pass"  *ngFor="let store of invalidStores | orderBy: order : reverse; let i = index" [attr.data-index]="i">
-        					<div class="logo"><img src={{store.logoUrl}} alt="" /></div>
+        					<div class="logo" title="Store Image"><img src={{store.logoUrl}} alt="Store Image" *ngIf="store.logoUrl != null && store.logoUrl != ''" /></div>
 			        		<div class="type">{{store.storeId}}</div>
 			        		<div class="name">{{store.name}}</div>	     
 			        		<div class="type">{{store.phone}}</div>	    	     

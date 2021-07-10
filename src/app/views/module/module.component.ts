@@ -23,7 +23,7 @@ export class ModuleComponent implements OnInit {
     success: any = '';
     modules: any = [];
     module: any = null;
-    order: string = 'name';
+    order: string = 'id';
     reverse: boolean = false;
     isForm: boolean= false;
     isNew: boolean= false;

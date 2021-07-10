@@ -3,9 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { first } from 'rxjs/operators';
+import { PageEvent } from '@angular/material/paginator';
 
-import { AuthenticationService, LoaderService } from '../../_services';
-import { User } from '../../_models';
+import { AuthenticationService, LoaderService, AppService } from '../../_services';
+import { User, CampaignStoreData } from '../../_models';
 
 @Component({
   moduleId: module.id.toString(),
@@ -26,6 +27,7 @@ export class CampaignStoreComponent implements OnInit {
     companyId: any= 0;    
     campaignName: string = "";
     campaigns: any = [];
+    stats: any = [];
     campaign: any = null;
     static: any = null;
     order: string = 'storeId';
@@ -34,11 +36,19 @@ export class CampaignStoreComponent implements OnInit {
     isForm: boolean= false;
     isNew: boolean= false;
     isEdit: boolean= false;
+    isReport: boolean= false;
+
+    pageSize: number = 10;
+    currentPage: number = 0;
+    totalSize: number = 0;
+    dataSource: any = [];
+    pageEvent: PageEvent;
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
+        private appService: AppService,
         private loaderService: LoaderService,
         private authenticationService: AuthenticationService
     ) { 
@@ -50,10 +60,16 @@ export class CampaignStoreComponent implements OnInit {
 
       this.form = this.formBuilder.group({
         id: ['0'],
-        companyId: ['0'],
-        name: ['', Validators.required],
-        uniqueUrl: [''],
-        headerText: [''],
+        storeId: ['', Validators.required],
+        uniqueUrl: ['', Validators.required],
+        module1: [''],
+        module2: [''],
+        module3: [''],
+        module4: [''],
+        module5: [''],
+        module6: [''],
+        module7: [''],
+        module8: [''],
         isActive: ['']
       });
 
@@ -105,11 +121,17 @@ export class CampaignStoreComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     if(data != null && data.length > 0){
+                        this.dataSource = data;
                         this.campaigns = data;
+
+                        this.totalSize = this.dataSource.length;
+                        this.iterator();
+
                         this.loading = false;
                         this.loaderService.display(false);
                     }
                     else{
+                        this.dataSource = [];
                         this.campaigns = [];
                         this.error = "no campaign store found";
                         this.loading = false;
@@ -117,6 +139,7 @@ export class CampaignStoreComponent implements OnInit {
                     }
                 },
                 (error: any) => {
+                    this.dataSource = [];
                     this.campaigns = [];
                     this.error = error;
                     this.loading = false;
@@ -138,21 +161,24 @@ export class CampaignStoreComponent implements OnInit {
 
       this.loading = true;
 
-      this.campaign = {
+      let campaign: CampaignStoreData= {
         Id: this.f.id.value,
-        CompanyId: this.companyId,
-        Name: this.f.name.value,
+        CampaignId: this.id,
+        StoreId: this.f.storeId.value,
         UniqueUrl: this.f.uniqueUrl.value,
-        StartDate: this.f.startDate.value,
-        EndDate: this.f.endDate.value,
-        TextColor: this.f.textColor.value?.hex,
-        HeaderColor: this.f.headerColor.value?.hex,
-        HeaderText: this.f.headerText.value,
+        Module1: this.f.module1.value,
+        Module2: this.f.module2.value,
+        Module3: this.f.module3.value,
+        Module4: this.f.module4.value,
+        Module5: this.f.module5.value,
+        Module6: this.f.module6.value,
+        Module7: this.f.module7.value,
+        Module8: this.f.module8.value,
         IsActive: (this.f.isActive.value==true)?1:0,
       };
 
       if(this.isNew){
-        this.authenticationService.createCampaign(this.campaign, this.currentUser.apikey)
+        this.authenticationService.createCampaignStore(campaign, this.currentUser.apikey)
             .pipe(first())
             .subscribe(
                 (data: any) => {
@@ -162,6 +188,7 @@ export class CampaignStoreComponent implements OnInit {
                     this.isForm=!this.isForm;
                     this.isNew=false;
                     this.isEdit=false;
+                    this.isReport=false;
                     this.getCampaignStores();
                   }
                   else{
@@ -177,7 +204,7 @@ export class CampaignStoreComponent implements OnInit {
                 });
       }
       else{
-        this.authenticationService.updateCampaign(this.campaign, this.currentUser.apikey)
+        this.authenticationService.updateCampaignStore(campaign, this.currentUser.apikey)
             .pipe(first())
             .subscribe(
                 (data: any) => {
@@ -187,6 +214,7 @@ export class CampaignStoreComponent implements OnInit {
                     this.isForm=!this.isForm;
                     this.isNew=false;
                     this.isEdit=false;
+                    this.isReport=false;
                     this.getCampaignStores();
                   }
                   else{
@@ -206,15 +234,16 @@ export class CampaignStoreComponent implements OnInit {
     removeCampaign(Id: number) {
       if(confirm('Are you sure you want to delete this campaign store?')){
         this.loaderService.display(true);
-        this.authenticationService.deleteCampaign(Id)
+        this.authenticationService.deleteCampaignStore(Id)
           .pipe(first())
           .subscribe(
               (data: any) => {
                   if(data != null && data.id > 0){    
                     this.success = "campaign store deleted!!!";   
                     this.loading = false;
-                    this.loaderService.display(false);                    
-                     this.campaigns = this.campaigns.filter(({ id }: any) => id !== Id); 
+                    this.loaderService.display(false);          
+                     this.dataSource = this.dataSource.filter(({ id }: any) => id !== Id);   
+                     this.campaigns = this.dataSource; 
                   }
                   else{
                     this.loading = false;
@@ -236,14 +265,75 @@ export class CampaignStoreComponent implements OnInit {
       this.isForm=!this.isForm;
       this.isNew=false;
       this.isEdit=true;
+      this.isReport=false;
 
       this.campaign= campaign;
 
       this.form.controls.id.setValue(this.campaign.id);
-      this.form.controls.name.setValue(this.campaign.name);
+      this.form.controls.storeId.setValue(this.campaign.storeId);
       this.form.controls.uniqueUrl.setValue(this.campaign.uniqueUrl);
-      this.form.controls.headerText.setValue(this.campaign.headerText);
+      this.form.controls.module1.setValue(this.campaign.module1);
+      this.form.controls.module2.setValue(this.campaign.module2);
+      this.form.controls.module3.setValue(this.campaign.module3);
+      this.form.controls.module4.setValue(this.campaign.module4);
+      this.form.controls.module5.setValue(this.campaign.module5);
+      this.form.controls.module6.setValue(this.campaign.module6);
+      this.form.controls.module7.setValue(this.campaign.module7);
+      this.form.controls.module8.setValue(this.campaign.module8);
       this.form.controls.isActive.setValue(this.campaign.isActive);
+    }
+
+    viewReport(Id: number){
+
+      this.success = "";
+      this.error = "";
+      this.isForm=!this.isForm;
+      this.isNew=false;
+      this.isEdit=false;
+      this.isReport = true;
+
+      this.campaign= null;
+
+      this.form.controls.id.setValue(0);
+      this.form.controls.storeId.setValue('');
+      this.form.controls.uniqueUrl.setValue('');
+      this.form.controls.module1.setValue('');
+      this.form.controls.module2.setValue('');
+      this.form.controls.module3.setValue('');
+      this.form.controls.module4.setValue('');
+      this.form.controls.module5.setValue('');
+      this.form.controls.module6.setValue('');
+      this.form.controls.module7.setValue('');
+      this.form.controls.module8.setValue('');
+      this.form.controls.isActive.setValue('');
+
+      if(Id != 0){
+            this.loading = true;
+            this.loaderService.display(true);
+            this.authenticationService.getCampaignStatisticById(Id, this.currentUser.apikey)
+                .pipe(first())
+                .subscribe(
+                    (data: any) => {
+                        if(data != null && data.length > 0){
+                            this.stats = data;
+                            this.error = "";
+                            this.loading = false;
+                            this.loaderService.display(false);
+                        }
+                        else{
+                            this.stats = [];
+                            this.error = "No statistic found";
+                            this.loading = false;
+                            this.loaderService.display(false);
+                        }
+                    },
+                    (error: any) => {
+                        this.stats = [];
+                        this.error = error;
+                        this.loading = false;
+                        this.loaderService.display(false);
+                    });
+        }
     }
 
     new(){
@@ -252,13 +342,21 @@ export class CampaignStoreComponent implements OnInit {
       this.isForm=!this.isForm;
       this.isNew=true;
       this.isEdit=false;
+      this.isReport=false;
 
-      this.campaign= null;
+      this.campaign = null;
 
       this.form.controls.id.setValue(0);
-      this.form.controls.name.setValue('');
+      this.form.controls.storeId.setValue('');
       this.form.controls.uniqueUrl.setValue('');
-      this.form.controls.headerText.setValue('');
+      this.form.controls.module1.setValue('');
+      this.form.controls.module2.setValue('');
+      this.form.controls.module3.setValue('');
+      this.form.controls.module4.setValue('');
+      this.form.controls.module5.setValue('');
+      this.form.controls.module6.setValue('');
+      this.form.controls.module7.setValue('');
+      this.form.controls.module8.setValue('');
       this.form.controls.isActive.setValue('');
     }
 
@@ -268,14 +366,34 @@ export class CampaignStoreComponent implements OnInit {
       this.isForm=!this.isForm;
       this.isNew=false;
       this.isEdit=false;
+      this.isReport=false;
 
-      this.campaign= null;
+      this.campaign = null;
 
       this.form.controls.id.setValue(0);
-      this.form.controls.name.setValue('');
+      this.form.controls.storeId.setValue('');
       this.form.controls.uniqueUrl.setValue('');
-      this.form.controls.headerText.setValue('');
+      this.form.controls.module1.setValue('');
+      this.form.controls.module2.setValue('');
+      this.form.controls.module3.setValue('');
+      this.form.controls.module4.setValue('');
+      this.form.controls.module5.setValue('');
+      this.form.controls.module6.setValue('');
+      this.form.controls.module7.setValue('');
+      this.form.controls.module8.setValue('');
       this.form.controls.isActive.setValue('');
+    }
+
+    back(){
+      this.success = "";
+      this.error = "";
+      this.isForm=!this.isForm;
+      this.isNew=false;
+      this.isEdit=false;
+      this.isReport=false;
+
+      this.campaign = null;
+      this.stats = [];      
     }
 
     formatDate(value: any){
@@ -300,5 +418,25 @@ export class CampaignStoreComponent implements OnInit {
 
     goto(){
       this.router.navigate(["campaigns/" + this.companyId]);
+    }
+
+    downloadCSV(){
+      let headerList: any= ['storeId', 'uniqueUrl'];//,'Shop Online','Contact Form','Download a offer','Location Directions','Book Appointment','Open an account','Signup for an event','Content Block'];
+      this.appService.downloadFile(this.campaigns, headerList, 'campaignstore');
+    }
+
+    public handlePage(e: any) {
+      this.pageEvent = e;
+      this.currentPage = e.pageIndex;
+      this.pageSize = e.pageSize;
+      this.iterator();
+      return this.pageEvent;
+    }
+
+    private iterator() {
+      const end = (this.currentPage + 1) * this.pageSize;
+      const start = this.currentPage * this.pageSize;
+      const part = this.dataSource.slice(start, end);
+      this.campaigns = part;
     }
 }

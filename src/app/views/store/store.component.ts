@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Cloudinary } from '@cloudinary/angular-5.x';
+import { PageEvent } from '@angular/material/paginator';
 
 import { AuthenticationService, LoaderService, AlertService } from '../../_services';
 import { User } from '../../_models';
@@ -23,7 +24,8 @@ export class StoreComponent implements OnInit {
     submitted = false;
     error: any = '';
     success: any = '';
-    stores: any = [];;
+    companies: any = [];
+    stores: any = [];
     store: any = null;
     companyId: any= 0;    
     companyName: string = "";
@@ -39,6 +41,12 @@ export class StoreComponent implements OnInit {
 
     hasBaseDropZoneOver: boolean = false;
     uploader: FileUploader;
+
+    pageSize: number = 10;
+    currentPage: number = 0;
+    totalSize: number = 0;
+    dataSource: any = [];
+    pageEvent: PageEvent;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -121,10 +129,47 @@ export class StoreComponent implements OnInit {
         setTimeout(() => this.showLoader = val, 0);
       });
 
-      this.form.controls.companyId.setValue(this.companyId);
-      
-      this.getCompany();
-    }  
+      this.form.controls.companyId.setValue(this.companyId);      
+
+      this.getCompanies(true);
+    } 
+
+    getCompanies(isLoad = false){
+
+        this.loaderService.display(true);
+        this.loading = true;
+        this.authenticationService.getCompanies(this.currentUser.apikey)
+                .pipe(first())
+                .subscribe(
+                    (data: any) => {
+                        if(data != null){
+                          this.companies=data;
+                          this.error = "";
+                          this.companyName = "";
+                          if(this.companyId != 0){
+                            this.getCompany();
+                          }
+                          else{
+                            this.loading = false;
+                            this.loaderService.display(false);
+                          }
+                        }
+                        else{
+                        this.companies = [];
+                          this.companyName = "";
+                          this.error = "No company found";
+                          this.loading = false;
+                          this.loaderService.display(false);
+                        }
+                    },
+                    (error: any) => {
+                        this.companies = [];
+                        this.companyName = "";
+                        this.error = error;
+                        this.loading = false;
+                        this.loaderService.display(false);
+                    });
+    }
 
     getCompany(){
       if(this.companyId != 0){
@@ -153,7 +198,24 @@ export class StoreComponent implements OnInit {
                         this.loaderService.display(false);
                     });
       }
-    }  
+    }   
+
+    changeCompany(e){
+      if(e.target.value != ""){
+        this.companyId = e.target.value;    
+        this.getCompany();
+      }
+      else{   
+        this.companyId = 0;
+        this.companyName = "";
+        this.stores = []; 
+      }
+    }
+
+    resetCompany(){
+      this.companyId = 0;
+      this.companyName = ""; 
+    } 
 
     getStores(){
       this.loaderService.display(true);
@@ -163,11 +225,17 @@ export class StoreComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     if(data != null && data.length > 0){
+                        this.dataSource = data;
                         this.stores = data;
+
+                        this.totalSize = this.dataSource.length;
+                        this.iterator();
+                        
                         this.loading = false;
                         this.loaderService.display(false);
                     }
                     else{
+                        this.dataSource = [];
                         this.stores = [];
                         this.error = "no store found";
                         this.loading = false;
@@ -175,6 +243,7 @@ export class StoreComponent implements OnInit {
                     }
                 },
                 (error: any) => {
+                    this.dataSource = [];
                     this.stores = [];
                     this.error = error;
                     this.loading = false;
@@ -398,5 +467,20 @@ export class StoreComponent implements OnInit {
 
     fileOverBase(e: any): void {
       this.hasBaseDropZoneOver = e;
+    }
+
+    public handlePage(e: any) {
+      this.pageEvent = e;
+      this.currentPage = e.pageIndex;
+      this.pageSize = e.pageSize;
+      this.iterator();
+      return this.pageEvent;
+    }
+
+    private iterator() {
+      const end = (this.currentPage + 1) * this.pageSize;
+      const start = this.currentPage * this.pageSize;
+      const part = this.dataSource.slice(start, end);
+      this.stores = part;
     }
 }

@@ -6,7 +6,16 @@
     </div>
     <!-- main app container -->
     <div class="container">
-        <h4>Manage Campaigns (<span>Company: {{companyName}}</span>)</h4>
+        <h4>Manage Campaigns (
+            <span *ngIf="this.companyId == 0">
+                Select Company: 
+                <select (change)="changeCompany($event)" autocomplete="off">
+                    <option value="">select</option>
+                    <option *ngFor="let company of companies" value="{{company.id}}">{{company.name}}</option>
+                </select>
+            </span>
+            <span *ngIf="this.companyId != 0">Company: {{companyName}} <a (click)="resetCompany()">[change]</a></span> )
+        </h4>
         <div id="content">
         	<div id="pnlPasses" *ngIf="!isForm">
         		<div class="pass header"  *ngIf="campaigns.length > 0">
@@ -69,13 +78,23 @@
                             </svg>            
                         </a>
             		</div>
-        		</div>
+        		</div>      
+                <mat-paginator  [pageSize]="pageSize" 
+                                [pageSizeOptions]="[5, 10, 20]" 
+                                [showFirstLastButtons]="true" 
+                                [length]="totalSize"
+                                (page)="handlePage($event)" 
+                                *ngIf="campaigns.length > 0 && dataSource.length >= pageSize">
+                </mat-paginator>
         	</div>
-            <div id="pnlNoContent" *ngIf="!loading && !isForm && campaigns.length == 0">
+            <div id="pnlNoContent" *ngIf="!loading && !isForm && campaigns.length == 0 && this.companyId != 0">
                 <p>No Campaign Found</p>
                 <div>
                     <a (click)="new()" class="btnCreate" title="Create Campaign">Create Campaign</a>
                 </div>
+            </div>
+            <div id="pnlNoContent"  *ngIf="!loading && !isForm && campaigns.length == 0 && this.companyId == 0">
+                <p>Select Company</p>
             </div>
             <div class="card" *ngIf="isForm">
                 <h4 class="card-header text-center">{{ (campaign != null)?"Update Campaign":"Create Campaign"}}</h4>

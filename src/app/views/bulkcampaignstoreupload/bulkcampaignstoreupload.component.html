@@ -44,19 +44,19 @@
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
 		                </div>
 		    			<div class="type" [class.active]="order === 'Module1'" (click)="setOrder('Module1')" title="Sort By Purchase Link">
-		                    Purchase Link
+		                    Shop Online
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
 		                </div>
 		                <div class="type" [class.active]="order === 'Module2'" (click)="setOrder('Module2')" title="Sort By View Sale">
-		                    View Sale
+		                    Contact Form
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
 		                </div>
 		                <div class="type" [class.active]="order === 'Module3'" (click)="setOrder('Module3')" title="Sort By Download a offer">
 		                    Download a offer
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
 		                </div>
-		                <div class="type" [class.active]="order === 'Module4'" (click)="setOrder('Module4')" title="Sort By Signup">
-		                    Signup
+		                <div class="type" [class.active]="order === 'Module4'" (click)="setOrder('Module4')" title="Sort By Location Directions">
+		                    Location Directions
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
 		                </div>
 		                <div class="type" [class.active]="order === 'Module5'" (click)="setOrder('Module5')" title="Sort By Book Appointment">
@@ -108,19 +108,19 @@
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
 		                </div>
 		    			<div class="type" [class.active]="order === 'module1'" (click)="setOrder('module1')" title="Sort By Purchase Link">
-		                    Purchase Link
+		                    Shop Online
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
 		                </div>
 		                <div class="type" [class.active]="order === 'module2'" (click)="setOrder('module2')" title="Sort By View Sale">
-		                    View Sale
+		                    Contact Form
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
 		                </div>
 		                <div class="type" [class.active]="order === 'module3'" (click)="setOrder('module3')" title="Sort By Download a offer">
 		                    Download a offer
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
 		                </div>
-		                <div class="type" [class.active]="order === 'module4'" (click)="setOrder('module4')" title="Sort By Signup">
-		                    Signup
+		                <div class="type" [class.active]="order === 'module4'" (click)="setOrder('module4')" title="Sort By Location Directions">
+		                    Location Directions
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
 		                </div>
 		                <div class="type" [class.active]="order === 'module5'" (click)="setOrder('module5')" title="Sort By Book Appointment">
@@ -143,7 +143,7 @@
 		    		<div id="pnlData">
 			    		<div class="pass"  *ngFor="let store of invalidCampaignStores | orderBy: order : reverse; let i = index" [attr.data-index]="i">
 			        		<div class="name">{{store.storeId}}</div>
-			        		<div class="name">{{store.uniqueUrl}}</div>	   
+			        		<div class="name"><a href="{{store.uniqueUrl}}" target="_blank">{{store.uniqueUrl}}</a></div>   
 			        		<div class="type">{{(store.module1 != '')?'Y':'N'}}</div>	     
 			        		<div class="type">{{(store.module2 != '')?'Y':'N'}}</div>	    	     
 			        		<div class="type">{{(store.module3 != '')?'Y':'N'}}</div>	    
@@ -167,19 +167,19 @@
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
 		                </div>
 		    			<div class="type" [class.active]="order === 'module1'" (click)="setOrder('module1')" title="Sort By Purchase Link">
-		                    Purchase Link
+		                    Shop Online
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>                    
 		                </div>
 		                <div class="type" [class.active]="order === 'module2'" (click)="setOrder('module2')" title="Sort By View Sale">
-		                    View Sale
+		                    Contact Form
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
 		                </div>
 		                <div class="type" [class.active]="order === 'module3'" (click)="setOrder('module3')" title="Sort By Download a offer">
 		                    Download a offer
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
 		                </div>
-		                <div class="type" [class.active]="order === 'module4'" (click)="setOrder('module4')" title="Sort By Signup">
-		                    Signup
+		                <div class="type" [class.active]="order === 'module4'" (click)="setOrder('module4')" title="Sort By Location Directions">
+		                    Location Directions
 		                    <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>   
 		                </div>
 		                <div class="type" [class.active]="order === 'module5'" (click)="setOrder('module5')" title="Sort By Book Appointment">
@@ -202,7 +202,7 @@
 		    		<div id="pnlData">
 			    		<div class="pass"  *ngFor="let store of validCampaignStores | orderBy: order : reverse; let i = index" [attr.data-index]="i">
 			        		<div class="name">{{store.storeId}}</div>
-			        		<div class="name">{{store.uniqueUrl}}</div>	   
+			        		<div class="name"><a href="{{store.uniqueUrl}}" target="_blank">{{store.uniqueUrl}}</a></div>  
 			        		<div class="type">{{(store.module1 != '')?'Y':'N'}}</div>	     
 			        		<div class="type">{{(store.module2 != '')?'Y':'N'}}</div>	    	     
 			        		<div class="type">{{(store.module3 != '')?'Y':'N'}}</div>	    

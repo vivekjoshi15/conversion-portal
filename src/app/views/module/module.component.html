@@ -11,6 +11,10 @@
         	<div id="pnlPasses" *ngIf="!isForm">
         		<div class="pass header"  *ngIf="modules.length > 0">
                     <div>
+                        <div class="type" [class.active]="order === 'id'" (click)="setOrder('id')" title="Sort By Id">
+                            Id 
+                            <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                        </div>
             			<div class="name" [class.active]="order === 'name'" (click)="setOrder('name')" title="Sort By Name">
                             Name 
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
@@ -30,6 +34,7 @@
                     </div>
         		</div>
         		<div class="pass" *ngFor="let module of modules | orderBy: order : reverse; let i = index" [attr.data-index]="i">
+                    <div class="type">{{module.id}}</div>
             		<div class="name" (click)="edit(module)" title="click here to edit/view company">{{module.name}}</div>
                     <div class="type">{{module.type}}</div>
                     <div class="isactive">{{(module.isActive==1)?true:false}}</div>

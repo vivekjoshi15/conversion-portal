@@ -111,6 +111,9 @@
 	    		&.name{
 		    		font-weight: normal;
 	    		}
+	    		&.link{
+	    			width: 80px;
+	    		}
 	    		&.isactive{
     				justify-content: flex-start;
 	    		}
@@ -135,9 +138,31 @@
     			width: 120px;
     			justify-content: flex-start;
     		}
+    		&.link{
+    			width: 80px;
+    			justify-content: center;
+    		}
     		&.isactive{
     			width: 70px;
-    		}
+    		}    		
+			a{
+			    padding: 3px 10px;
+   				text-transform: uppercase;
+				cursor: pointer;
+				display: flex;
+				width: auto;
+				margin: 0;
+				border: 0;
+				background: #0052cc;
+				border-radius: 14px;
+				font-style: normal;
+				font-weight: 400;
+				font-size: 10px;
+				line-height: 14px;
+				text-align: center;
+				color: #fff;
+				text-decoration: none;
+			   }
     		img{
     			height:32px;
     			width:32px;

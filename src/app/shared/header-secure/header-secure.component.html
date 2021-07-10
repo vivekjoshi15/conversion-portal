@@ -8,17 +8,29 @@
                 </div>
                 <nav class="navbar navbar-expand navbar-dark">
                     <div class="navbar-nav">
-                        <a class="nav-item nav-link" routerLink="/" title="Companies" [ngClass]="{sel: previousUrl == '' }">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5 5H9V9H5V5ZM3 11V3H11V11H3ZM15 5H19V9H15V5ZM13 11V3H21V11H13ZM9 15H5V19H9V15ZM3 13V21H11V13H3ZM15 13H13V21H15V13ZM16 13H18V21H16V13ZM21 13H19V21H21V13Z" fill="#fff"  [attr.fill-opacity]="getColor('companies')"/>
-                            </svg>
+                        <a class="nav-item nav-link" routerLink="/" title="Companies" [ngClass]="{sel: previousUrl == '' }">                            
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fffc"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"  [attr.fill-opacity]="getColor('companies')"/></svg>
                             <span>Companies</span>
+                        </a>                        
+                        <a class="nav-item nav-link" routerLink="/stores/0" title="Stores" [ngClass]="{sel: previousUrl == '' }">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fffc"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.36 9l.6 3H5.04l.6-3h12.72M20 4H4v2h16V4zm0 3H4l-1 5v2h1v6h10v-6h4v6h2v-6h1v-2l-1-5zM6 18v-4h6v4H6z" [attr.fill-opacity]="getColor('stores')"/></svg>
+                            <span>Stores</span>
+                        </a>
+                        <a class="nav-item nav-link" routerLink="/campaigns/0" title="Campaigns" [ngClass]="{sel: previousUrl == 'campaigns' }">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                               <path fill-rule="evenodd" clip-rule="evenodd" d="M5 5H9V9H5V5ZM3 11V3H11V11H3ZM15 5H19V9H15V5ZM13 11V3H21V11H13ZM9 15H5V19H9V15ZM3 13V21H11V13H3ZM15 13H13V21H15V13ZM16 13H18V21H16V13ZM21 13H19V21H21V13Z" fill="#fff"  [attr.fill-opacity]="getColor('campaigns')"/>
+                            </svg>
+                            <span>Campaigns</span>
                         </a>
                         <a class="nav-item nav-link" routerLink="/modules" title="Modules" [ngClass]="{sel: previousUrl == 'modules' }">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M14 6H10C9.44772 6 9 6.44772 9 7V17C9 17.5523 9.44772 18 10 18H14C14.5523 18 15 17.5523 15 17V7C15 6.44772 14.5523 6 14 6ZM10 4C8.34315 4 7 5.34315 7 7V17C7 18.6569 8.34315 20 10 20H14C15.6569 20 17 18.6569 17 17V7C17 5.34315 15.6569 4 14 4H10ZM6 7.45936L3.4932 7.04156C1.6646 6.73679 0 8.14692 0 10.0007V14.918C0 16.7718 1.6646 18.1819 3.4932 17.8772L6 17.4594V15.4318L3.1644 15.9044C2.55487 16.006 2 15.5359 2 14.918V10.0007C2 9.3828 2.55487 8.91276 3.1644 9.01435L6 9.48695V7.45936ZM20.5068 7.04156L18 7.45936V9.48695L20.8356 9.01435C21.4451 8.91276 22 9.3828 22 10.0007V14.918C22 15.5359 21.4451 16.006 20.8356 15.9044L18 15.4318V17.4594L20.5068 17.8772C22.3354 18.1819 24 16.7718 24 14.918V10.0007C24 8.14692 22.3354 6.73679 20.5068 7.04156Z" fill="#fff" [attr.fill-opacity]="getColor('modules')"/>
                             </svg>
                             <span>Modules</span>
+                        </a>
+                        <a class="nav-item nav-link" routerLink="/contentblock" title="Content Blocks" [ngClass]="{sel: previousUrl == 'contentblock' }">                            
+                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#fffc"><g><rect fill="none" height="24" width="24"/></g><g><g/><g><path d="M8,8H6v7c0,1.1,0.9,2,2,2h9v-2H8V8z"/><path d="M20,3h-8c-1.1,0-2,0.9-2,2v6c0,1.1,0.9,2,2,2h8c1.1,0,2-0.9,2-2V5C22,3.9,21.1,3,20,3z M20,11h-8V7h8V11z"/><path d="M4,12H2v7c0,1.1,0.9,2,2,2h9v-2H4V12z"/></g></g><g display="none"><g display="inline"/><g display="inline"><path d="M8,8H6v7c0,1.1,0.9,2,2,2h9v-2H8V8z"/><path d="M20,3h-8c-1.1,0-2,0.9-2,2v6c0,1.1,0.9,2,2,2h8c1.1,0,2-0.9,2-2V5C22,3.9,21.1,3,20,3z M20,11h-8V7h8V11z"/><path d="M4,12H2v7c0,1.1,0.9,2,2,2h9v-2H4V12z"/></g></g></svg>
+                            <span>Contents</span>
                         </a>
                     </div>
                 </nav>

@@ -1,4 +1,4 @@
-StoreId,Purchase Link,View Sale,Download a offer,Signup,Book Appointment,Open an account,Signup for an event,Content Block
-Store1,http://www.google.com,,,,http://www.yahoo.com,http://www.test.com,http://www.apple.com,These are test contents
-Store2,,,http://www.apple.com,,http://www.yahoo.com,http://www.test.com,http://www.apple.com,content block text
-Store3,http://www.google.com,http://www.apple.com,,http://www.mobeomedia.com,,,http://www.apple.com,
+StoreId,Shop Online,Contact Form,Download a offer,Location Directions,Book Appointment,Open an account,Signup for an event,Content Block
+Store1,http://www.google.com,Link,,Address,http://www.yahoo.com,http://www.test.com,Form,id=1
+Store2,,,http://www.apple.com,Address,http://www.yahoo.com,http://www.test.com,Form,content block text
+Store3,http://www.google.com,Form,,http://www.mobeomedia.com,Form,,http://www.apple.com,

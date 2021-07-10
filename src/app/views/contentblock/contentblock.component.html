@@ -6,45 +6,35 @@
     </div>
     <!-- main app container -->
     <div class="container">
-        <h4>Manage Companies</h4>
+        <h4>Manage Content Blocks</h4>
         <div id="content">
         	<div id="pnlPasses" *ngIf="!isForm">
-        		<div class="pass header"  *ngIf="companies.length > 0">
+        		<div class="pass header"  *ngIf="contentBlocks.length > 0">
                     <div>
-            			<div class="logo"></div>
-            			<div class="name" [class.active]="order === 'name'" (click)="setOrder('name')" title="Sort By Name">
-                            Name 
+                        <div class="name" [class.active]="order === 'id'" (click)="setOrder('id')" title="Sort By Id">
+                            Id 
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
                         </div>
-                        <div class="isactive" [class.active]="order === 'isActive'" (click)="setOrder('isActive')" title="Sort By Is Active">
-                            Is Active
+                        <div class="type" [class.active]="order === 'name'" (click)="setOrder('name')" title="Sort By Created On">
+                            Name
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
                         </div>
-                        <div class="type" [class.active]="order === 'createdDate'" (click)="setOrder('createdDate')" title="Sort By Created On">
-                            Created On
+            			<div class="type" [class.active]="order === 'createdDate'" (click)="setOrder('createdDate')" title="Sort By Created On">
+                            Created On 
                             <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
-                        </div>
-                        <div class="link" title="Number of Stores">
-                            Stores
-                        </div>
-                        <div class="link" title="Number of Campaigns">
-                            Campaigns
                         </div>
             			<div class="buttons"></div>
                     </div>
                     <div>
-                        <a id="lnkNew" (click)="new()" class="btnCreate" title="Create Company">Create Company</a>
+                        <a id="lnkNew" (click)="new()" class="btnCreate" title="Create Content Block">Create Content</a>
                     </div>
         		</div>
-        		<div class="pass" [ngClass]="{sel: selView == i }"  *ngFor="let company of companies | orderBy: order : reverse; let i = index" [attr.data-index]="i">
-            		<div class="logo"><img src={{company.logoUrl}} alt="" *ngIf="company.logoUrl != null && company.logoUrl != ''" /></div>
-            		<div class="name" (click)="edit(company)" title="click here to edit/view company">{{company.name}}</div>
-                    <div class="isactive">{{(company.isActive==1)?true:false}}</div>
-                    <div class="type">{{(company.createdDate!=null)?(company.createdDate|date :'short'):""}}</div>
-                    <div class="link"><a routerLink="/stores/{{company.id}}" title="view company stores">{{company.stores.length}}</a></div>
-                    <div class="link"><a routerLink="/campaigns/{{company.id}}" title="view company campaigns">{{company.campaigns.length}}</a></div>
+        		<div class="pass" *ngFor="let contentBlock of contentBlocks | orderBy: order : reverse; let i = index" [attr.data-index]="i">
+                    <div class="name" (click)="edit(contentBlock)" title="click here to edit/view Content Block">{{contentBlock.id}}</div>
+                    <div class="type">{{contentBlock.name}}</div>
+                    <div class="type">{{(contentBlock.createdDate!=null)?(contentBlock.createdDate|date :'short'):""}}</div>
             		<div class="buttons">
-        	    		<a (click)="removeCompany(company.id)" title="remove company">
+        	    		<a (click)="removeContentBlock(contentBlock.id)" title="remove content block">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M19.3333 11.334V10.6673C19.3333 9.93094 18.7364 9.33398 18 9.33398H14C13.2636 9.33398 12.6667 9.93094 12.6667 10.6673V11.334H10.6667C10.2985 11.334 10 11.6325 10 12.0007C10 12.3688 10.2985 12.6673 10.6667 12.6673H11.3333V20.0007C11.3333 21.1053 12.2288 22.0007 13.3333 22.0007H18.6667C19.7713 22.0007 20.6667 21.1053 20.6667 20.0007V12.6673H21.3333C21.7015 12.6673 22 12.3688 22 12.0007C22 11.6325 21.7015 11.334 21.3333 11.334H19.3333ZM18 10.6673H14V11.334H18V10.6673ZM19.3333 12.6673H12.6667V20.0007C12.6667 20.3689 12.9651 20.6673 13.3333 20.6673H18.6667C19.0349 20.6673 19.3333 20.3689 19.3333 20.0007V12.6673ZM14 14.0007H15.3333V19.334H14V14.0007ZM18 14.0007H16.6667V19.334H18V14.0007Z" fill="#8F92A1"/>
                             </svg>            
@@ -56,28 +46,32 @@
                                 [showFirstLastButtons]="true" 
                                 [length]="totalSize"
                                 (page)="handlePage($event)" 
-                                *ngIf="companies.length > 0 && dataSource.length >= pageSize">
+                                *ngIf="contentBlocks.length > 0 && dataSource.length >= pageSize">
                 </mat-paginator>
         	</div>
-            <div id="pnlNoContent"  *ngIf="!loading && !isForm && companies.length == 0">
-                <p>No Company Found</p>
+            <div id="pnlNoContent"  *ngIf="!loading && !isForm && contentBlocks.length == 0">
+                <p>No Content Block Found</p>
                 <div>
-                    <a id="lnkNew" (click)="new()" class="btnCreate" title="Create Company">Create Company</a>
+                    <a id="lnkNew" (click)="new()" class="btnCreate" title="Create Content Block">Create Content Block</a>
                 </div>
             </div>
             <div class="card" *ngIf="isForm">
-                <h4 class="card-header text-center">{{ (company != null)?"Update Company":"Create Company"}}</h4>
+                <h4 class="card-header text-center">{{ (contentBlock != null)?"Update Content Block":"Create Content Block"}}</h4>
                 <div class="card-body">
                     <form [formGroup]="form" (ngSubmit)="onSubmit()" style="margin-top: 40px;">
-                        <div class="form-group box">
-                            <span class="label">Company Name</span>
-                            <div class="pnlFull">
-                                <input type="hidden" formControlName="id"/>
-                                <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Enter Company Name" autocomplete="off" />
+                        <div class="form-group box" style="margin-bottom: 20px; padding-bottom: 20px;">
+                            <span class="label">Preview</span>
+                            <div class="pnlProduct" [innerHtml]="form.value.content">  
                             </div>
-                        </div>                                      
+                        </div>
+                        <div class="form-group box">
+                            <span class="label">Name</span>
+                            <div class="pnlFull">
+                                <input type="text" formControlName="name" class="form-control" placeholder="Enter Name" autocomplete="off" />
+                            </div>
+                        </div>
                         <div class="form-group box box4">
-                            <h3>Logo</h3>
+                            <h3>Insert/Update Image</h3>
                             <p class="info"></p>
                             <div class="pnlImage">
                                 <div class="image">
@@ -89,6 +83,7 @@
                                         <span class="loading"></span>
                                     </div>
                                     <img *ngIf="this.logoUrl != null && this.logoUrl != '' && !isLogoProgress" src={{logoUrl}} width="48" height="48" />
+                                    <a (click)="insertImage()" *ngIf="this.logoUrl != null && this.logoUrl != '' && !isLogoProgress">Insert</a>
                                 </div>
                                 <div class="text">
                                     <div class="row1">
@@ -104,52 +99,18 @@
                             </div>
                         </div>
                         <div class="form-group box">
-                            <span class="label">Website Url</span>
+                            <span class="label">Content</span>
                             <div class="pnlFull">
-                                <input type="text" formControlName="websiteUrl" class="form-control" placeholder="Enter Website Url" autocomplete="off" />
+                                <input type="hidden" formControlName="id"/>
+                                <angular-editor formControlName="content" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.content.errors }" placeholder="Enter Content" autocomplete="off"></angular-editor>
                             </div>
-                        </div>
-                        <div class="form-group box">
-                            <span class="label">Calendar Url</span>
-                            <div class="pnlFull">
-                                <input type="text" formControlName="calendarUrl" class="form-control" placeholder="Enter Calendar Url" autocomplete="off" />
-                            </div>
-                        </div>
-                        <div class="form-group box">
-                            <span class="label">Contact Form Url</span>
-                            <div class="pnlFull">
-                                <input type="text" formControlName="contactFormUrl" class="form-control" placeholder="Enter Contact Form Url" autocomplete="off" />
-                            </div>
-                        </div>
-                        <div class="form-group box">
-                            <span class="label">Facebook Url</span>
-                            <div class="pnlFull">
-                                <input type="text" formControlName="facebookUrl" class="form-control" placeholder="Enter Facebook Url" autocomplete="off" />
-                            </div>
-                        </div>
-                        <div class="form-group box">
-                            <span class="label">Header Text</span>
-                            <div class="pnlFull">
-                                <textarea formControlName="headerText" class="form-control" placeholder="Enter Header Text" autocomplete="off" ></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group box">
-                            <span class="label">Footer Text</span>
-                            <div class="pnlFull">
-                                <textarea formControlName="footerText" class="form-control" placeholder="Enter Footer Text" autocomplete="off"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group box noborder">
-                            <span class="label">Is Active?&nbsp;
-                                <input type="checkbox" formControlName="isActive" />
-                            </span>
                         </div>
                         <div class="form-group box alignItem">
                             <button [disabled]="loading" class="btn btn-primary btnCreate btnCreate2">
                                 <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                                {{ (company != null)?"UPDATE":"CREATE"}}
+                                {{ (contentBlock != null)?"UPDATE":"CREATE"}}
                             </button>
-                            <button  (click)="close()" class="btn btn-primary btnCreate btnCreate3">
+                            <button (click)="close()" class="btn btn-primary btnCreate btnCreate3">
                                 CANCEL
                             </button>
                         </div>

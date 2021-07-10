@@ -19,6 +19,20 @@
 		    font-weight: bold;
 		    text-transform: capitalize;    
 	    }
+	    select{
+	    	border: 1px solid #ccc;
+    		margin: 0px 10px 0 0px;
+    		font-size: 12px;
+    		padding: 3px;
+	    }
+	    a{
+		    font-size: 11px;
+		    font-weight: 500;
+		    font-style: italic;
+		    color: #0d6efd;
+		    text-transform: none;
+		    cursor: pointer;
+	    }
     }
 }
 

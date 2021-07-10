@@ -97,11 +97,11 @@ export class BulkStoreUploadComponent implements OnInit {
                 }
             }
 
-          this.uploader.onProgressItem = (fileItem: any, progress: any) => {
-            this.isFileProgress=true;
-          }
+            this.uploader.onProgressItem = (fileItem: any, progress: any) => {
+                this.isFileProgress=true;
+            }
 
-          return { fileItem, form };
+            return { fileItem, form };
         };
 
         this.getCompany();
@@ -153,47 +153,52 @@ export class BulkStoreUploadComponent implements OnInit {
             return;
         }
 
-        this.invalidStores=[];
-        
-        this.loading = true;
+        if (confirm("Existing store details will be replaced with new data being uploaded. Please confirm")){
 
-        this.authenticationService.bulkStoreUpload(this.id, this.stores, this.currentUser.apikey)
-            .pipe(first())
-            .subscribe(
-                (data: any) => {
-                  if(data != null && data.message == "success"){
-                    this.fileReset();
+            this.invalidStores=[];        
+            this.loading = true;
+            this.authenticationService.bulkStoreUpload(this.id, this.stores, this.currentUser.apikey)
+                .pipe(first())
+                .subscribe(
+                    (data: any) => {
+                      if(data != null && data.message == "success"){
+                        this.fileReset();
 
-                    if(data.validStores.length > 0){                        
-                        this.success = data.validStores.length + " stores uploaded.";
-                    }
+                        if(data.validStores.length > 0){                        
+                            this.success = data.validStores.length + " stores uploaded.";
+                        }
 
-                    if(data.invalidStores.length > 0){                        
-                        this.error = data.invalidStores.length + " invalid stores found with duplicate StoreIds.";
-                        this.invalidStores = data.invalidStores;
+                        if(data.invalidStores.length > 0){                        
+                            this.error = data.invalidStores.length + " stores updated with following StoreIds.";
+                            this.invalidStores = data.invalidStores;
 
-                        //data.invalidStores.forEach(function (storeObj) {
-                        //  console.log(value);
-                        //}); 
-                    }
+                            //data.invalidStores.forEach(function (storeObj) {
+                            //  console.log(value);
+                            //}); 
+                        }
 
-                    this.submitted = false;
-                    this.loading = false;
-                    this.loaderService.display(false);
-                  }
-                  else{
-                    this.submitted = false;
-                    this.error = data.message;
-                    this.loading = false;
-                    this.loaderService.display(false);
-                  }
-                },
-                (error: any) => {
-                    this.submitted = false;
-                    this.error = error;
-                    this.loading = false;
-                    this.loaderService.display(false);
-                });
+                        this.submitted = false;
+                        this.loading = false;
+                        this.loaderService.display(false);
+                      }
+                      else{
+                        this.submitted = false;
+                        this.error = data.message;
+                        this.loading = false;
+                        this.loaderService.display(false);
+                      }
+                    },
+                    (error: any) => {
+                        this.submitted = false;
+                        this.error = error;
+                        this.loading = false;
+                        this.loaderService.display(false);
+                    });
+        }
+        else{
+            this.loaderService.display(false);
+            this.submitted = false;         
+        }
     }
 
     fileOverBase(e: any): void {
